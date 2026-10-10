@@ -1,0 +1,5061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Manager Pro - Advanced Edition</title>
+
+<style>
+/* ================= ADVANCED ENHANCED CSS ================= */
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.app {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ================= HEADER ================= */
+.header {
+  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-top: 5px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ================= QUICK STATS ================= */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.quick-stat {
+  background: var(--bg-card);
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.quick-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+}
+
+.quick-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.quick-stat.stocks::before { background: #6366f1; }
+.quick-stat.crypto::before { background: #f59e0b; }
+.quick-stat.mf::before { background: #10b981; }
+.quick-stat.bank::before { background: #3b82f6; }
+.quick-stat.home::before { background: #8b5cf6; }
+.quick-stat.total::before { background: linear-gradient(180deg, #6366f1, #8b5cf6); }
+
+.quick-stat-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.quick-stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quick-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.quick-stat-change {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quick-stat-change.positive { color: var(--success); }
+.quick-stat-change.negative { color: var(--danger); }
+
+/* ================= TABS ================= */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: var(--bg-secondary);
+  padding: 8px;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-primary);
+}
+
+.tab.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+/* ================= SECTIONS ================= */
+.section {
+  display: none;
+  animation: fadeIn 0.3s;
+}
+
+.section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.section-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ================= TABLES ================= */
+.table-container {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: auto;
+  max-height: 70vh;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+
+thead {
+  background: var(--bg-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+th {
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+
+th:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+th.sortable::after {
+  content: ' ⇅';
+  opacity: 0.3;
+}
+
+th.sort-asc::after {
+  content: ' ↑';
+  opacity: 1;
+}
+
+th.sort-desc::after {
+  content: ' ↓';
+  opacity: 1;
+}
+
+td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+tbody tr {
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+tfoot {
+  background: var(--bg-secondary);
+  font-weight: 600;
+  position: sticky;
+  bottom: 0;
+}
+
+tfoot td {
+  border-top: 2px solid var(--accent);
+  border-bottom: none;
+  padding: 20px 16px;
+}
+
+.profit { color: var(--success); font-weight: 600; }
+.loss { color: var(--danger); font-weight: 600; }
+
+/* ================= FORMS ================= */
+.form-card {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input, select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ================= BUTTONS ================= */
+button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+button.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.4);
+}
+
+button.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+button.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-primary);
+}
+
+button.btn-success {
+  background: var(--success);
+  color: white;
+}
+
+button.btn-success:hover:not(:disabled) {
+  background: #059669;
+}
+
+button.btn-warning {
+  background: var(--warning);
+  color: white;
+}
+
+button.btn-danger {
+  background: var(--danger);
+  color: white;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+button.btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+button.btn-info {
+  background: var(--info);
+  color: white;
+}
+
+button.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* ================= CHARTS ================= */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.chart-card h3 {
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.chart-container {
+  height: 240px;
+  position: relative;
+}
+
+canvas {
+  max-height: 100%;
+}
+
+/* ================= BADGES ================= */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+.badge-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+.badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+.badge-info { background: rgba(59, 130, 246, 0.2); color: var(--info); }
+
+/* ================= LOADING ================= */
+.loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= TOAST NOTIFICATIONS ================= */
+#toastContainer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+}
+
+.toast {
+  background: var(--bg-card);
+  padding: 16px 24px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: slideIn 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(400px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast.success { border-left-color: var(--success); }
+.toast.error { border-left-color: var(--danger); }
+.toast.warning { border-left-color: var(--warning); }
+.toast.info { border-left-color: var(--info); }
+
+.toast-icon {
+  font-size: 20px;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.toast-message {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  font-size: 18px;
+}
+
+/* ================= SEARCH & FILTER ================= */
+.search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding-left: 40px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+/* ================= MODAL ================= */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s;
+  overflow-y: auto;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+/* ================= PROGRESS BAR ================= */
+.progress-bar {
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+/* ================= STATS CARDS ================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.stat-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.stat-card-body h4 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.stat-card-body p {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.stat-card-footer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* ================= COMPOUND INTEREST CALCULATOR ================= */
+.calculator-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.calculator-input-section {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.calculator-results {
+  display: grid;
+  gap: 16px;
+}
+
+.result-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.result-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.result-period {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.result-multiplier {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.result-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.result-value-item {
+  padding: 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
+}
+
+.result-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.result-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.result-gain {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.compound-chart-container {
+  margin-top: 24px;
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+/* ================= BANK SECTION ENHANCEMENTS ================= */
+.bank-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.bank-summary-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.bank-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.bank-summary-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.bank-summary-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bank-summary-sublabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-active { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+.status-matured { background: rgba(99, 102, 241, 0.2); color: var(--accent); }
+.status-maturing { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+
+.progress-indicator {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-indicator-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--success));
+  transition: width 0.3s;
+}
+
+.account-type-savings { border-left: 4px solid #10b981; }
+.account-type-fd { border-left: 4px solid #6366f1; }
+.account-type-rd { border-left: 4px solid #f59e0b; }
+.account-type-current { border-left: 4px solid #3b82f6; }
+
+.monthly-interest {
+  font-size: 12px;
+  color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.days-remaining {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--bg-secondary);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .header h1 { font-size: 24px; }
+  .quick-stats { grid-template-columns: 1fr; }
+  .charts-grid { grid-template-columns: 1fr; }
+  form { grid-template-columns: 1fr; }
+  .table-container { overflow: auto; }
+  .section-actions { width: 100%; }
+  .search-bar { max-width: 100%; }
+  #toastContainer { left: 12px; right: 12px; }
+  .calculator-container { grid-template-columns: 1fr; }
+  .bank-summary-cards { grid-template-columns: 1fr; }
+}
+
+/* ================= MOBILE CARD VIEW ================= */
+@media (max-width: 640px) {
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab { scroll-snap-align: start; }
+
+  .table-container {
+    max-height: none;
+    overflow: visible;
+    border: none;
+    background: transparent;
+  }
+  .table-container table { min-width: 0; width: 100%; }
+  .table-container thead,
+  .table-container tfoot { display: none; }
+  .table-container tbody tr {
+    display: block;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+  }
+  .table-container tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    padding: 4px 0;
+    text-align: right;
+    font-size: 12px;
+  }
+  .table-container tbody td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: left;
+    flex: 0 0 45%;
+  }
+  .table-container tbody td:empty { display: none; }
+}
+
+/* ================= PRINT STYLES ================= */
+
+@media print {
+  .header-actions, .tabs, .section-actions, button { display: none !important; }
+  body { background: white; color: black; }
+  .app { max-width: 100%; }
+}
+
+/* ================= PORTFOLIO ALLOCATION CHART ================= */
+.allocation-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.allocation-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.allocation-color {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.allocation-info {
+  flex: 1;
+}
+
+.allocation-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.allocation-value {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.allocation-percent {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ================= TRANSACTION HISTORY ================= */
+.transaction-item {
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-info h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.transaction-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.transaction-amount {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ================= GOAL TRACKER ================= */
+.goal-card {
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.goal-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.goal-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.goal-progress-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+
+/* ================= SIP CALCULATOR ================= */
+.sip-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.toggle-option {
+  flex: 1;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.toggle-option.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.toggle-option:hover {
+  border-color: var(--accent);
+}
+
+/* ================= LIGHT THEME ================= */
+body.light {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #e2e8f0;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border: #cbd5e1;
+}
+body.light .quick-stat:hover,
+body.light tbody tr:hover { background: rgba(99, 102, 241, 0.06); }
+body.light .table-container { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+.theme-toggle { font-size: 16px; line-height: 1; padding: 9px 12px; }
+
+/* ================= MATURITY ALERTS ================= */
+.alerts-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 18px;
+  margin-bottom: 24px;
+}
+.alerts-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.alerts-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.alert-list { display: flex; flex-direction: column; gap: 10px; }
+.alert-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 14px; border-radius: 10px;
+  border-left: 4px solid var(--warning);
+  background: var(--bg-secondary);
+}
+.alert-item.matured { border-left-color: var(--danger); }
+.alert-item-info { display: flex; flex-direction: column; gap: 2px; }
+.alert-item-name { font-weight: 600; font-size: 13px; }
+.alert-item-meta { font-size: 11px; color: var(--text-secondary); }
+.alert-count-badge {
+  background: var(--warning); color: #fff; border-radius: 999px;
+  padding: 2px 9px; font-size: 11px; font-weight: 700; min-width: 24px; text-align: center;
+}
+.alert-empty { color: var(--text-secondary); font-size: 13px; text-align: center; padding: 14px; }
+
+/* ================= TAX & PROJECTION ================= */
+.tax-summary, .projection-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px; margin-bottom: 24px;
+}
+.tax-table th, .tax-table td { font-size: 12px; padding: 8px 10px; }
+.compound-chart-container { margin-top: 20px; }
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- ================= ENHANCED HEADER ================= -->
+<div class="header">
+  <div class="header-content">
+    <div>
+      <h1>
+        <span>💼</span>
+        Portfolio Manager Pro
+      </h1>
+      <div class="header-subtitle">
+        Advanced Investment Tracking & Analytics • Last Updated: <span id="lastUpdated">Never</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-secondary theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle light/dark">
+        🌙
+      </button>
+      <button class="btn-secondary" onclick="openSettings()">
+        ⚙️ Settings
+      </button>
+      <button class="btn-secondary" onclick="backupData()">
+        💾 Backup
+      </button>
+      <button class="btn-secondary" onclick="openImportJson()">
+        📥 Paste JSON
+      </button>
+      <label style="cursor:pointer;" class="btn-secondary">
+        ⬆️ Restore
+        <input type="file" accept=".json" hidden onchange="restoreData(event)">
+      </label>
+      <button class="btn-success" onclick="refreshAllPrices()" id="refreshAllBtn">
+        🔄 Refresh All
+      </button>
+      <button class="btn-info" onclick="exportToCSV()">
+        📊 Export CSV
+      </button>
+      <button class="btn-warning" onclick="printPortfolio()">
+        🖨️ Print
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= QUICK STATS DASHBOARD ================= -->
+<div class="quick-stats">
+  <div class="quick-stat total">
+    <div class="quick-stat-icon">💰</div>
+    <div class="quick-stat-label">Total Portfolio</div>
+    <div class="quick-stat-value" id="totalPortfolioValue">₹0.00</div>
+    <div class="quick-stat-change" id="totalPortfolioChange">
+      <span>↑ ₹0.00 (0%)</span>
+    </div>
+  </div>
+  
+  <div class="quick-stat stocks">
+    <div class="quick-stat-icon">📈</div>
+    <div class="quick-stat-label">Stocks</div>
+    <div class="quick-stat-value" id="stocksValue">₹0.00</div>
+    <div class="quick-stat-change" id="stocksChange">₹0.00</div>
+  </div>
+  
+  <div class="quick-stat crypto">
+    <div class="quick-stat-icon">₿</div>
+    <div class="quick-stat-label">Crypto</div>
+    <div class="quick-stat-value" id="cryptoValue">₹0.00</div>
+    <div class="quick-stat-change" id="cryptoChange">₹0.00</div>
+  </div>
+  
+  <div class="quick-stat mf">
+    <div class="quick-stat-icon">📊</div>
+    <div class="quick-stat-label">Mutual Funds</div>
+    <div class="quick-stat-value" id="mfValue">₹0.00</div>
+    <div class="quick-stat-change" id="mfChange">₹0.00</div>
+  </div>
+  
+  <div class="quick-stat bank">
+    <div class="quick-stat-icon">🏦</div>
+    <div class="quick-stat-label">Bank</div>
+    <div class="quick-stat-value" id="bankValue">₹0.00</div>
+  </div>
+  
+  <div class="quick-stat home">
+    <div class="quick-stat-icon">🏠</div>
+    <div class="quick-stat-label">Home</div>
+    <div class="quick-stat-value" id="homeValue">₹0.00</div>
+  </div>
+</div>
+
+<!-- ================= TABS ================= -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('overview',this)">
+    🏠 Overview
+  </button>
+  <button class="tab" onclick="switchTab('stocks',this)">
+    📈 Stocks
+  </button>
+  <button class="tab" onclick="switchTab('crypto',this)">
+    ₿ Crypto
+  </button>
+  <button class="tab" onclick="switchTab('mf',this)">
+    📊 Mutual Funds
+  </button>
+  <button class="tab" onclick="switchTab('bank',this)">
+    🏦 Bank
+  </button>
+  <button class="tab" onclick="switchTab('home',this)">
+    🏠 Home
+  </button>
+  <!--<button class="tab" onclick="switchTab('loan',this)">
+    🏦 Loan
+  </button> -->
+  <button class="tab" onclick="switchTab('calculator',this)">
+    🧮 Calculator
+  </button>
+  <button class="tab" onclick="switchTab('analytics',this)">
+    📉 Analytics
+  </button>
+  <button class="tab" onclick="switchTab('goals',this)">
+    🎯 Goals
+  </button>
+  <button class="tab" onclick="switchTab('transactions',this)">
+    📜 History
+  </button>
+  <button class="tab" onclick="switchTab('tax',this)">
+    🧾 Tax
+  </button>
+  <button class="tab" onclick="switchTab('projection',this)">
+    🔮 Projection
+  </button>
+</div>
+
+<!-- ================= OVERVIEW SECTION ================= -->
+<div id="overview" class="section active">
+  <div class="alerts-card" id="maturityAlertsCard">
+    <div class="alerts-header">
+      <div class="alerts-title">🔔 Maturity Alerts & Reminders</div>
+      <span class="alert-count-badge" id="maturityAlertsCount">0</span>
+    </div>
+    <div class="alert-list" id="maturityAlerts"></div>
+  </div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Portfolio Allocation</h3>
+      <div class="chart-container">
+        <canvas id="allocationChart"></canvas>
+      </div>
+      <div class="allocation-grid" id="allocationList"></div>
+    </div>
+    
+    <div class="chart-card">
+      <h3>Performance Over Time</h3>
+      <div class="chart-container">
+        <canvas id="performanceChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Today's Gain/Loss</p>
+          <h4 id="todayPL">₹0.00</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(16, 185, 129, 0.2);">
+          📊
+        </div>
+      </div>
+      <div class="stat-card-footer">
+        Updated <span id="todayUpdateTime">just now</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Best Performer</p>
+          <h4 style="font-size: 18px;" id="bestPerformer">-</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(99, 102, 241, 0.2);">
+          🚀
+        </div>
+      </div>
+      <div class="stat-card-footer">
+        <span id="bestPerformerGain" class="profit">+0%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Worst Performer</p>
+          <h4 style="font-size: 18px;" id="worstPerformer">-</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(239, 68, 68, 0.2);">
+          📉
+        </div>
+      </div>
+      <div class="stat-card-footer">
+        <span id="worstPerformerLoss" class="loss">-0%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Total Holdings</p>
+          <h4 id="totalHoldings">0</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(245, 158, 11, 0.2);">
+          📦
+        </div>
+      </div>
+      <div class="stat-card-footer">
+        Across all categories
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3>📈 Net Worth Over Time</h3>
+      <button class="btn-secondary btn-small" onclick="clearNetWorthHistory()" style="font-size:11px;padding:4px 10px;">Clear History</button>
+    </div>
+    <div class="chart-container">
+      <canvas id="netWorthChart"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Quick Actions</h3>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px;">
+      <button class="btn-primary" onclick="switchTab('stocks', document.querySelectorAll('.tab')[1])">
+        ➕ Add Stock
+      </button>
+      <button class="btn-primary" onclick="switchTab('crypto', document.querySelectorAll('.tab')[2])">
+        ➕ Add Crypto
+      </button>
+      <button class="btn-primary" onclick="switchTab('mf', document.querySelectorAll('.tab')[3])">
+        ➕ Add Mutual Fund
+      </button>
+      <button class="btn-success" onclick="refreshAllPrices()">
+        🔄 Refresh All Prices
+      </button>
+      <button class="btn-info" onclick="exportToCSV()">
+        📊 Export to CSV
+      </button>
+      <button class="btn-secondary" onclick="backupData()">
+        💾 Backup Data
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= STOCKS SECTION ================= -->
+<div id="stocks" class="section">
+  <div class="section-header">
+    <h2>📈 Stock Portfolio</h2>
+    <div class="section-actions">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="stocksSearch" placeholder="Search stocks..." onkeyup="filterTable('stocksTable', this.value)">
+      </div>
+      <select id="stocksFilter" onchange="filterByCategory('stocks', this.value)" style="padding: 10px;">
+        <option value="">All Stocks</option>
+        <option value="profit">Profitable</option>
+        <option value="loss">Loss Making</option>
+      </select>
+      <button class="btn-success" onclick="refreshStockPrices()">
+        <span id="stocksRefreshBtn">🔄 Refresh Prices</span>
+      </button>
+      <button class="btn-info btn-small" onclick="exportSectionToCSV('stocks')">
+        📊 Export
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table id="stocksTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('stocksTable', 0)">Name</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 1)">Symbol</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 2)">Qty</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 3)">Avg Cost</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 4)">Invested</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 5)">Current Price</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 6)">Current Value</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 7)">P/L</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 8)">P/L %</th>
+          <th class="sortable" onclick="sortTable('stocksTable', 9)">Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td id="stocksTotalRows">0 Rows</td>
+          <td id="stocksTotalQty">0</td>
+          <td>-</td>
+          <td id="stocksTotalInvested">₹0.00</td>
+          <td>-</td>
+          <td id="stocksTotalValue">₹0.00</td>
+          <td id="stocksTotalPL">₹0.00</td>
+          <td id="stocksTotalPLPercent">0%</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="form-card">
+    <h3 style="margin-bottom: 16px;">➕ Add Stock Transaction</h3>
+    <form id="stocksForm">
+      <div class="form-group">
+        <label>Stock Name *</label>
+        <input name="name" placeholder="e.g., Reliance Industries" required>
+      </div>
+      <div class="form-group">
+        <label>Symbol *</label>
+        <input name="symbol" placeholder="e.g., RELIANCE" required>
+      </div>
+      <div class="form-group">
+        <label>Quantity *</label>
+        <input name="qty" type="number" step="0.01" placeholder="0" required>
+      </div>
+      <div class="form-group">
+        <label>Average Cost (₹) *</label>
+        <input name="avgCost" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Purchase Date</label>
+        <input name="date" type="date">
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <input name="notes" placeholder="Optional notes">
+      </div>
+      <button type="submit" class="btn-primary">Add Stock</button>
+      <button type="button" class="btn-secondary" onclick="copyLast('stocksForm')">
+        📋 Copy Last Entry
+      </button>
+      <button type="reset" class="btn-secondary">
+        🔄 Reset Form
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= CRYPTO SECTION ================= -->
+<div id="crypto" class="section">
+  <div class="section-header">
+    <h2>₿ Crypto Portfolio</h2>
+    <div class="section-actions">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="cryptoSearch" placeholder="Search crypto..." onkeyup="filterTable('cryptoTable', this.value)">
+      </div>
+      <select id="cryptoFilter" onchange="filterByCategory('crypto', this.value)" style="padding: 10px;">
+        <option value="">All Crypto</option>
+        <option value="profit">Profitable</option>
+        <option value="loss">Loss Making</option>
+      </select>
+      <button class="btn-success" onclick="refreshCryptoPrices()">
+        <span id="cryptoRefreshBtn">🔄 Refresh Prices</span>
+      </button>
+      <button class="btn-info btn-small" onclick="exportSectionToCSV('crypto')">
+        📊 Export
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table id="cryptoTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('cryptoTable', 0)">Name</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 1)">Symbol</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 2)">Qty</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 3)">Avg Cost</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 4)">Invested</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 5)">Current Price</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 6)">Current Value</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 7)">P/L</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 8)">P/L %</th>
+          <th class="sortable" onclick="sortTable('cryptoTable', 9)">Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td id="cryptoTotalRows">0 Rows</td>
+          <td id="cryptoTotalQty">0</td>
+          <td>-</td>
+          <td id="cryptoTotalInvested">₹0.00</td>
+          <td>-</td>
+          <td id="cryptoTotalValue">₹0.00</td>
+          <td id="cryptoTotalPL">₹0.00</td>
+          <td id="cryptoTotalPLPercent">0%</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="form-card">
+    <h3 style="margin-bottom: 16px;">➕ Add Crypto Transaction</h3>
+    <form id="cryptoForm">
+      <div class="form-group">
+        <label>Crypto Name *</label>
+        <input name="name" placeholder="e.g., Bitcoin" required>
+      </div>
+      <div class="form-group">
+        <label>Symbol (CoinGecko ID) *</label>
+        <input name="symbol" placeholder="e.g., bitcoin" required>
+      </div>
+      <div class="form-group">
+        <label>Quantity *</label>
+        <input name="qty" type="number" step="0.00000001" placeholder="0" required>
+      </div>
+      <div class="form-group">
+        <label>Average Cost (₹) *</label>
+        <input name="avgCost" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Purchase Date</label>
+        <input name="date" type="date">
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <input name="notes" placeholder="Optional notes">
+      </div>
+      <button type="submit" class="btn-primary">Add Crypto</button>
+      <button type="button" class="btn-secondary" onclick="copyLast('cryptoForm')">
+        📋 Copy Last Entry
+      </button>
+      <button type="reset" class="btn-secondary">
+        🔄 Reset Form
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= MUTUAL FUNDS SECTION ================= -->
+<div id="mf" class="section">
+  <div class="section-header">
+    <h2>📊 Mutual Funds</h2>
+    <div class="section-actions">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="mfSearch" placeholder="Search funds..." onkeyup="filterTable('mfTable', this.value)">
+      </div>
+      <select id="mfFilter" onchange="filterByCategory('mf', this.value)" style="padding: 10px;">
+        <option value="">All Funds</option>
+        <option value="profit">Profitable</option>
+        <option value="loss">Loss Making</option>
+      </select>
+      <button class="btn-success" onclick="refreshMFPrices()">
+        <span id="mfRefreshBtn">🔄 Refresh NAV</span>
+      </button>
+      <button class="btn-info btn-small" onclick="exportSectionToCSV('mf')">
+        📊 Export
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table id="mfTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('mfTable', 0)">Name</th>
+          <th class="sortable" onclick="sortTable('mfTable', 1)">Scheme Code</th>
+          <th class="sortable" onclick="sortTable('mfTable', 2)">Units</th>
+          <th class="sortable" onclick="sortTable('mfTable', 3)">Avg NAV</th>
+          <th class="sortable" onclick="sortTable('mfTable', 4)">Invested</th>
+          <th class="sortable" onclick="sortTable('mfTable', 5)">Current NAV</th>
+          <th class="sortable" onclick="sortTable('mfTable', 6)">Current Value</th>
+          <th class="sortable" onclick="sortTable('mfTable', 7)">P/L</th>
+          <th class="sortable" onclick="sortTable('mfTable', 8)">P/L %</th>
+          <th class="sortable" onclick="sortTable('mfTable', 9)">Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td id="mfTotalRows">0 Rows</td>
+          <td id="mfTotalUnits">0</td>
+          <td>-</td>
+          <td id="mfTotalInvested">₹0.00</td>
+          <td>-</td>
+          <td id="mfTotalValue">₹0.00</td>
+          <td id="mfTotalPL">₹0.00</td>
+          <td id="mfTotalPLPercent">0%</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="form-card">
+    <h3 style="margin-bottom: 16px;">➕ Add Mutual Fund</h3>
+    <form id="mfForm">
+      <div class="form-group">
+        <label>Fund Name *</label>
+        <input name="name" placeholder="e.g., SBI Bluechip Fund" required>
+      </div>
+      <div class="form-group">
+        <label>Scheme Code *</label>
+        <input name="symbol" placeholder="e.g., 119598" required>
+      </div>
+      <div class="form-group">
+        <label>Units *</label>
+        <input name="units" type="number" step="0.0001" placeholder="0" required>
+      </div>
+      <div class="form-group">
+        <label>Average NAV (₹) *</label>
+        <input name="nav" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Purchase Date</label>
+        <input name="date" type="date">
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <input name="notes" placeholder="Optional notes">
+      </div>
+      <button type="submit" class="btn-primary">Add Fund</button>
+      <button type="button" class="btn-secondary" onclick="copyLast('mfForm')">
+        📋 Copy Last Entry
+      </button>
+      <button type="reset" class="btn-secondary">
+        🔄 Reset Form
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ENHANCED BANK SECTION ================= -->
+<div id="bank" class="section">
+  <div class="section-header">
+    <h2>🏦 Bank Accounts & Fixed Deposits</h2>
+    <div class="section-actions">
+      <button class="btn-success" onclick="calculateAllMaturity()">
+        📅 Recalculate All
+      </button>
+      <button class="btn-info btn-small" onclick="exportBankToCSV()">
+        📊 Export CSV
+      </button>
+      <button class="btn-warning btn-small" onclick="printBankReport()">
+        🖨️ Print Report
+      </button>
+    </div>
+  </div>
+
+  <!-- Bank Summary Cards -->
+  <div class="bank-summary-cards">
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Total Deposits</div>
+      <div class="bank-summary-value" id="bankSummaryBalance">₹0.00</div>
+      <div class="bank-summary-sublabel">Principal amount</div>
+    </div>
+    
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Maturity Value</div>
+      <div class="bank-summary-value profit" id="bankSummaryMaturity">₹0.00</div>
+      <div class="bank-summary-sublabel">Expected final value</div>
+    </div>
+    
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Total Interest</div>
+      <div class="bank-summary-value profit" id="bankSummaryInterest">₹0.00</div>
+      <div class="bank-summary-sublabel">Total earnings</div>
+    </div>
+    
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Avg. Interest Rate</div>
+      <div class="bank-summary-value" id="bankSummaryAvgRate">0.00%</div>
+      <div class="bank-summary-sublabel">Weighted average</div>
+    </div>
+    
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Active Accounts</div>
+      <div class="bank-summary-value" id="bankSummaryAccounts">0</div>
+      <div class="bank-summary-sublabel">Total accounts</div>
+    </div>
+    
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Maturing Soon</div>
+      <div class="bank-summary-value warning" id="bankSummaryMaturingSoon">0</div>
+      <div class="bank-summary-sublabel">Within 30 days</div>
+    </div>
+
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Monthly Income</div>
+      <div class="bank-summary-value profit" id="bankMonthlyIncome">₹0.00</div>
+      <div class="bank-summary-sublabel">Average monthly</div>
+    </div>
+
+    <div class="bank-summary-card">
+      <div class="bank-summary-label">Annual Returns</div>
+      <div class="bank-summary-value profit" id="bankAnnualReturns">₹0.00</div>
+      <div class="bank-summary-sublabel">Yearly earnings</div>
+    </div>
+  </div>
+
+  <!-- Enhanced Bank Table with MORE columns -->
+  <div class="table-container">
+    <table id="bankTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('bankTable', 0)">Bank</th>
+          <th class="sortable" onclick="sortTable('bankTable', 1)">Type</th>
+          <th class="sortable" onclick="sortTable('bankTable', 2)">A/c Number</th>
+          <th class="sortable" onclick="sortTable('bankTable', 3)">Holder</th>
+          <th class="sortable" onclick="sortTable('bankTable', 4)">Principal</th>
+          <th class="sortable" onclick="sortTable('bankTable', 5)">Rate %</th>
+          <th class="sortable" onclick="sortTable('bankTable', 6)">Deposit Date</th>
+          <th class="sortable" onclick="sortTable('bankTable', 7)">Tenure</th>
+          <th class="sortable" onclick="sortTable('bankTable', 8)">Maturity Date</th>
+          <th class="sortable" onclick="sortTable('bankTable', 9)">Days Left</th>
+          <th>Progress</th>
+          <th class="sortable" onclick="sortTable('bankTable', 11)">Monthly Int.</th>
+          <th class="sortable" onclick="sortTable('bankTable', 12)">Total Interest</th>
+          <th class="sortable" onclick="sortTable('bankTable', 13)">Maturity Amt</th>
+          <th class="sortable" onclick="sortTable('bankTable', 14)">ROI %</th>
+          <th>Status</th>
+          <th>Branch</th>
+          <th>Nominee</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4"><strong>TOTAL</strong> (<span id="bankTotalRows">0</span> Accounts)</td>
+          <td id="bankTotalBalance">₹0.00</td>
+          <td id="bankAvgRate">0%</td>
+          <td colspan="5"></td>
+          <td id="bankTotalMonthly">₹0.00</td>
+          <td id="bankTotalInterest">₹0.00</td>
+          <td id="bankTotalMaturity">₹0.00</td>
+          <td id="bankAvgROI">0%</td>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- Enhanced Add Bank Form with MORE fields -->
+  <div class="form-card">
+    <h3 style="margin-bottom: 16px;">➕ Add Bank Account / Fixed Deposit</h3>
+    <form id="bankForm">
+      <div class="form-group">
+        <label>Bank Name *</label>
+        <input name="bankName" placeholder="e.g., HDFC Bank" required list="bankList">
+        <datalist id="bankList">
+          <option value="State Bank of India">
+          <option value="HDFC Bank">
+          <option value="ICICI Bank">
+          <option value="Axis Bank">
+          <option value="Kotak Mahindra Bank">
+          <option value="Punjab National Bank">
+          <option value="Bank of Baroda">
+          <option value="Canara Bank">
+          <option value="Union Bank of India">
+          <option value="IDFC First Bank">
+          <option value="Yes Bank">
+          <option value="IndusInd Bank">
+        </datalist>
+      </div>
+      
+      <div class="form-group">
+        <label>Account Type *</label>
+        <select name="accountType" required>
+          <option value="">Select Type</option>
+          <option value="Savings">Savings Account</option>
+          <option value="FD">Fixed Deposit (FD)</option>
+          <option value="RD">Recurring Deposit (RD)</option>
+          <option value="Current">Current Account</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Account Number</label>
+        <input name="accountNumber" placeholder="e.g., 1234567890">
+      </div>
+      
+      <div class="form-group">
+        <label>Account Holder *</label>
+        <input name="accountHolder" placeholder="Your Name" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Principal Amount (₹) *</label>
+        <input name="balance" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Interest Rate (% p.a.) *</label>
+        <input name="rate" type="number" step="0.01" placeholder="6.5" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Deposit Date</label>
+        <input name="depositDate" type="date" id="depositDateInput">
+      </div>
+      
+      <div class="form-group">
+        <label>Tenure (Days)</label>
+        <input name="days" type="number" placeholder="365" id="tenureInput">
+      </div>
+      
+      <div class="form-group">
+        <label>Maturity Date (Auto)</label>
+        <input name="maturityDate" type="date" id="maturityDatePreview" readonly style="background: var(--bg-primary);">
+      </div>
+      
+      <div class="form-group">
+        <label>Compounding</label>
+        <select name="compoundingFrequency">
+          <option value="1">Annually</option>
+          <option value="2">Half-Yearly</option>
+          <option value="4" selected>Quarterly</option>
+          <option value="12">Monthly</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Branch</label>
+        <input name="branch" placeholder="e.g., Main Branch">
+      </div>
+      
+      <div class="form-group">
+        <label>Nominee Name</label>
+        <input name="nominee" placeholder="e.g., Jane Doe">
+      </div>
+      
+      <div class="form-group">
+        <label>Certificate No.</label>
+        <input name="certificateNo" placeholder="e.g., FD123456">
+      </div>
+      
+      <div class="form-group">
+        <label>TDS Applicable</label>
+        <select name="tds">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Auto Renewal</label>
+        <select name="autoRenewal">
+          <option value="No">No</option>
+          <option value="Yes - Principal">Yes - Principal</option>
+          <option value="Yes with Interest">Yes - Principal + Interest</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Notes</label>
+        <input name="notes" placeholder="Additional information">
+      </div>
+      
+      <button type="submit" class="btn-primary">Add Account</button>
+      <button type="button" class="btn-secondary" onclick="copyLast('bankForm')">
+        📋 Copy Last Entry
+      </button>
+      <button type="reset" class="btn-secondary">
+        🔄 Reset Form
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= HOME SECTION ================= -->
+<div id="home" class="section">
+  <div class="section-header">
+    <h2>🏠 Home Investments</h2>
+    <div class="section-actions">
+      <button class="btn-info btn-small" onclick="exportSectionToCSV('home')">
+        📊 Export
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table id="homeTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('homeTable', 0)">Name</th>
+          <th class="sortable" onclick="sortTable('homeTable', 1)">Account</th>
+          <th class="sortable" onclick="sortTable('homeTable', 2)">Amount</th>
+          <th class="sortable" onclick="sortTable('homeTable', 3)">Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td id="homeTotalRows">0 Rows</td>
+          <td id="homeTotalAmount">₹0.00</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="form-card">
+    <h3 style="margin-bottom: 16px;">➕ Add Home Investment</h3>
+    <form id="homeForm">
+      <div class="form-group">
+        <label>Name *</label>
+        <input name="name" placeholder="e.g., Emergency Fund" required>
+      </div>
+      <div class="form-group">
+        <label>Account *</label>
+        <input name="account" placeholder="e.g., Savings Account" required>
+      </div>
+      <div class="form-group">
+        <label>Amount (₹) *</label>
+        <input name="amount" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input name="date" type="date">
+      </div>
+      <button type="submit" class="btn-primary">Add Investment</button>
+      <button type="button" class="btn-secondary" onclick="copyLast('homeForm')">
+        📋 Copy Last Entry
+      </button>
+      <button type="reset" class="btn-secondary">
+        🔄 Reset Form
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= LOANS (ISOLATED) ================= -->
+<div id="loan" class="section">
+  <div class="section-header">
+    <h2>🏦 Loans</h2>
+    <div class="section-actions">
+      <button class="btn-info btn-small" onclick="exportSectionToCSV('loan')">
+        📊 Export
+      </button>
+    </div>
+  </div>
+
+  <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;">
+    Loans are tracked separately and are never included in your portfolio total or any chart.
+  </p>
+
+  <div class="table-container">
+    <table id="loanTable">
+      <thead>
+        <tr>
+          <th class="sortable" onclick="sortTable('loanTable', 0)">Loan Name</th>
+          <th class="sortable" onclick="sortTable('loanTable', 1)">Lender</th>
+          <th class="sortable" onclick="sortTable('loanTable', 2)">Loan Amount</th>
+          <th class="sortable" onclick="sortTable('loanTable', 3)">Loan Date</th>
+          <th class="sortable" onclick="sortTable('loanTable', 4)">EMI</th>
+          <th class="sortable" onclick="sortTable('loanTable', 5)">Rate %</th>
+          <th class="sortable" onclick="sortTable('loanTable', 6)">Tenure (m)</th>
+          <th>Paid</th>
+          <th>Outstanding</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td id="loanTotalRows">0 Rows</td>
+          <td id="loanTotalAmount">₹0.00</td>
+          <td></td>
+          <td id="loanTotalEmi">₹0.00</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td id="loanTotalOutstanding">₹0.00</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="form-card">
+    <h3 style="margin-bottom: 16px;">➕ Add Loan</h3>
+    <form id="loanForm">
+      <div class="form-group">
+        <label>Loan Name *</label>
+        <input name="name" placeholder="e.g., Home Loan" required>
+      </div>
+      <div class="form-group">
+        <label>Lender / Bank *</label>
+        <input name="lender" placeholder="e.g., HDFC Bank" required>
+      </div>
+      <div class="form-group">
+        <label>Loan Amount (₹) *</label>
+        <input name="amount" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Loan Taken Date *</label>
+        <input name="loanDate" type="date" required>
+      </div>
+      <div class="form-group">
+        <label>EMI (₹) *</label>
+        <input name="emi" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Interest Rate (%)</label>
+        <input name="rate" type="number" step="0.01" placeholder="8.5">
+      </div>
+      <div class="form-group">
+        <label>Tenure (months)</label>
+        <input name="tenure" type="number" step="1" placeholder="240">
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <input name="notes" placeholder="Optional">
+      </div>
+      <button type="submit" class="btn-primary">Add Loan</button>
+      <button type="button" class="btn-secondary" onclick="copyLast('loanForm')">
+        📋 Copy Last Entry
+      </button>
+      <button type="reset" class="btn-secondary">
+        🔄 Reset Form
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= COMPOUND INTEREST CALCULATOR ================= -->
+<div id="calculator" class="section">
+  <div class="section-header">
+    <h2>🧮 Compound Interest Calculator</h2>
+  </div>
+
+  <div class="calculator-container">
+    <!-- Input Section -->
+    <div class="calculator-input-section">
+      <h3 style="margin-bottom: 20px;">Investment Details</h3>
+      
+      <!-- Toggle between Lumpsum and SIP -->
+      <div class="sip-toggle">
+        <div class="toggle-option active" onclick="toggleCalculatorMode('lumpsum')">
+          💰 Lumpsum
+        </div>
+        <div class="toggle-option" onclick="toggleCalculatorMode('sip')">
+          📅 SIP (Monthly)
+        </div>
+      </div>
+
+      <div id="lumpsumInputs">
+        <div class="form-group">
+          <label>Principal Amount (₹)</label>
+          <input type="number" id="principal" value="100000" step="1000" oninput="calculateCompound()">
+        </div>
+      </div>
+
+      <div id="sipInputs" style="display: none;">
+        <div class="form-group">
+          <label>Monthly SIP Amount (₹)</label>
+          <input type="number" id="sipAmount" value="10000" step="1000" oninput="calculateCompound()">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Annual Interest Rate (%)</label>
+        <input type="number" id="interestRate" value="12" step="0.1" oninput="calculateCompound()">
+      </div>
+
+      <div class="form-group">
+        <label>Compounding Frequency</label>
+        <select id="compoundFrequency" onchange="calculateCompound()">
+          <option value="1">Annually</option>
+          <option value="2">Half-Yearly</option>
+          <option value="4" selected>Quarterly</option>
+          <option value="12">Monthly</option>
+          <option value="365">Daily</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" onclick="calculateCompound()" style="margin-top: 20px; width: 100%;">
+        🧮 Calculate
+      </button>
+    </div>
+
+    <!-- Results Section -->
+    <div class="calculator-results" id="calculatorResults">
+      <!-- Results will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="compound-chart-container">
+    <h3>Growth Projection</h3>
+    <div class="chart-container">
+      <canvas id="compoundChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Detailed Breakdown -->
+  <div class="chart-card" style="margin-top: 24px;">
+    <h3>Year-by-Year Breakdown</h3>
+    <div class="table-container" style="max-height: 400px;">
+      <table id="breakdownTable">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Opening Balance</th>
+            <th>Interest Earned</th>
+            <th id="sipContributionHeader" style="display: none;">SIP Contribution</th>
+            <th>Closing Balance</th>
+          </tr>
+        </thead>
+        <tbody id="breakdownTableBody">
+          <!-- Breakdown will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ANALYTICS SECTION ================= -->
+<div id="analytics" class="section">
+  <div class="section-header">
+    <h2>📉 Portfolio Analytics</h2>
+    <div class="section-actions">
+      <select id="analyticsTimeframe" onchange="updateAnalytics()" style="padding: 10px;">
+        <option value="all">All Time</option>
+        <option value="1m">Last Month</option>
+        <option value="3m">Last 3 Months</option>
+        <option value="6m">Last 6 Months</option>
+        <option value="1y">Last Year</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Total Investment</p>
+          <h4 id="analyticsInvestment">₹0.00</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(99, 102, 241, 0.2);">💰</div>
+      </div>
+      <div class="stat-card-footer">
+        Across all categories
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Current Value</p>
+          <h4 id="analyticsCurrentValue">₹0.00</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(16, 185, 129, 0.2);">📈</div>
+      </div>
+      <div class="stat-card-footer">
+        Real-time valuation
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Total Returns</p>
+          <h4 id="analyticsReturns">₹0.00</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(16, 185, 129, 0.2);">💹</div>
+      </div>
+      <div class="stat-card-footer">
+        <span id="analyticsReturnsPercent">0%</span> return rate
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div>
+          <p style="color: var(--text-secondary); font-size: 14px;">Portfolio Diversity</p>
+          <h4 id="analyticsDiversity">0</h4>
+        </div>
+        <div class="stat-card-icon" style="background: rgba(245, 158, 11, 0.2);">🎯</div>
+      </div>
+      <div class="stat-card-footer">
+        Unique assets
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-bottom: 24px;">
+    <div class="section-header" style="margin-bottom: 12px;">
+      <h3>📐 Annualised Returns (XIRR / CAGR)</h3>
+      <span class="badge badge-info" id="portfolioXirr">Portfolio XIRR: —</span>
+    </div>
+    <p style="color: var(--text-secondary); font-size: 11px; margin-bottom: 12px;">
+      XIRR treats every purchase as a dated cash flow, so it reflects how long money was actually invested — unlike plain P/L %.
+    </p>
+    <div class="table-container" style="max-height: 400px;">
+      <table id="xirrTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Invested</th>
+            <th>Current</th>
+            <th>Held</th>
+            <th>Absolute %</th>
+            <th>CAGR %</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Asset Allocation</h3>
+      <div class="chart-container">
+        <canvas id="assetAllocationChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Profit/Loss Distribution</h3>
+      <div class="chart-container">
+        <canvas id="plDistributionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Top Holdings</h3>
+    <div class="table-container" style="margin-top: 20px; max-height: 400px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Current Value</th>
+            <th>P/L</th>
+            <th>P/L %</th>
+          </tr>
+        </thead>
+        <tbody id="topHoldingsTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ================= GOALS SECTION ================= -->
+<div id="goals" class="section">
+  <div class="section-header">
+    <h2>🎯 Financial Goals</h2>
+    <div class="section-actions">
+      <button class="btn-primary" onclick="openAddGoalModal()">
+        ➕ Add Goal
+      </button>
+    </div>
+  </div>
+
+  <div id="goalsContainer">
+    <!-- Goals will be dynamically added here -->
+  </div>
+
+  <div class="chart-card" style="margin-top: 24px;">
+    <h3>Goal Progress Overview</h3>
+    <div class="chart-container">
+      <canvas id="goalsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TRANSACTIONS HISTORY SECTION ================= -->
+<div id="transactions" class="section">
+  <div class="section-header">
+    <h2>📜 Transaction History</h2>
+    <div class="section-actions">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="transactionSearch" placeholder="Search transactions..." onkeyup="filterTransactions(this.value)">
+      </div>
+      <select id="transactionCategoryFilter" onchange="filterTransactions()" style="padding: 10px;">
+        <option value="">All Categories</option>
+        <option value="stocks">Stocks</option>
+        <option value="crypto">Crypto</option>
+        <option value="mf">Mutual Funds</option>
+        <option value="bank">Bank</option>
+        <option value="home">Home</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="transactionsList">
+    <!-- Transactions will be dynamically added here -->
+  </div>
+</div>
+
+<!-- ================= TAX CALCULATOR SECTION ================= -->
+<div id="tax" class="section">
+  <div class="section-header">
+    <h2>🧾 Tax / Capital Gains Calculator</h2>
+    <div class="section-actions">
+      <span style="font-size:11px;color:var(--text-secondary);">FY 2025-26 rates • Update prices via Refresh for accurate gains</span>
+    </div>
+  </div>
+  <div class="tax-summary">
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div><p style="color:var(--text-secondary);font-size:14px;">Short-Term Gains</p><h4 id="taxSTCG">₹0.00</h4></div>
+        <div class="stat-card-icon" style="background:rgba(245,158,11,.2);">⏱️</div>
+      </div>
+      <div class="stat-card-footer">Equity @20% • Crypto @30%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div><p style="color:var(--text-secondary);font-size:14px;">Long-Term Gains</p><h4 id="taxLTCG">₹0.00</h4></div>
+        <div class="stat-card-icon" style="background:rgba(16,185,129,.2);">📅</div>
+      </div>
+      <div class="stat-card-footer">₹1.25L exempt, then 12.5%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div><p style="color:var(--text-secondary);font-size:14px;">Total Taxable Gain</p><h4 id="taxTotalGain">₹0.00</h4></div>
+        <div class="stat-card-icon" style="background:rgba(99,102,241,.2);">💰</div>
+      </div>
+      <div class="stat-card-footer">After exemptions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div><p style="color:var(--text-secondary);font-size:14px;">Estimated Tax</p><h4 id="taxTotalTax">₹0.00</h4></div>
+        <div class="stat-card-icon" style="background:rgba(239,68,68,.2);">🏛️</div>
+      </div>
+      <div class="stat-card-footer">Approx. liability</div>
+    </div>
+  </div>
+  <div class="table-container">
+    <table id="taxTable" class="tax-table">
+      <thead><tr>
+        <th>Name</th><th>Category</th><th>Invested</th><th>Current Value</th><th>Gain</th><th>Holding Period</th><th>Type</th><th>Tax</th>
+      </tr></thead>
+      <tbody id="taxTableBody"></tbody>
+      <tfoot><tr>
+        <td><strong>TOTAL</strong></td>
+        <td id="taxTotalRows">0</td>
+        <td id="taxFootInvested">₹0.00</td>
+        <td id="taxFootValue">₹0.00</td>
+        <td id="taxFootGain">₹0.00</td>
+        <td></td><td></td>
+        <td><strong id="taxFootTax">₹0.00</strong></td>
+      </tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- ================= FUTURE PROJECTION SECTION ================= -->
+<div id="projection" class="section">
+  <div class="section-header">
+    <h2>🔮 Future Portfolio Projection</h2>
+    <div class="section-actions">
+      <span style="font-size:11px;color:var(--text-secondary);">Compound growth of your current portfolio over 5 / 10 / 20 / 30 years</span>
+    </div>
+  </div>
+  <div class="calculator-container">
+    <div class="calculator-input-section">
+      <h3 style="margin-bottom:20px;">Projection Assumptions</h3>
+      <div class="form-group">
+        <label>Current Portfolio Value (₹)</label>
+        <input type="number" id="projPrincipal" value="0" step="1000" oninput="renderProjection()">
+      </div>
+      <div class="form-group">
+        <label>Expected Annual Return (%)</label>
+        <input type="number" id="projRate" value="12" step="0.1" oninput="renderProjection()">
+      </div>
+      <div class="form-group">
+        <label>Monthly SIP / Addition (₹)</label>
+        <input type="number" id="projSip" value="0" step="1000" oninput="renderProjection()">
+      </div>
+      <button class="btn-primary" onclick="renderProjection()" style="margin-top:16px;width:100%;">🔄 Recalculate</button>
+      <button class="btn-secondary" onclick="syncProjectionBase()" style="margin-top:10px;width:100%;">⬇️ Use Current Portfolio Value</button>
+    </div>
+    <div class="calculator-results" id="projectionResults"></div>
+  </div>
+  <div class="compound-chart-container">
+    <h3>Projected Growth (30 Years)</h3>
+    <div class="chart-container"><canvas id="projectionChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ================= TOAST CONTAINER ================= -->
+<div id="toastContainer"></div>
+
+<!-- ================= MODALS ================= -->
+<!-- Settings Modal -->
+<div id="importJsonModal" class="modal">
+  <div class="modal-content" style="max-width: 700px;">
+    <div class="modal-header">
+      <h3>📥 Import JSON Data</h3>
+      <button class="modal-close" onclick="closeModal('importJsonModal')">×</button>
+    </div>
+    <div>
+      <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 10px;">
+        Paste a full backup <code>{ "bank": [ ... ] }</code> or just an array of bank records.
+      </p>
+      <textarea id="importJsonText" rows="12" spellcheck="false"
+        style="width:100%; background: var(--bg-primary); color: var(--text-primary); border:1px solid var(--border); border-radius:8px; padding:12px; font-family: monospace; font-size:13px;"
+        placeholder='{ "bank": [ { "bankName": "TYU", "accountHolder": "902329732918", "balance": 30000, "rate": 6.6, "days": 444, "date": "2025-12-04" } ] }'></textarea>
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button class="btn-primary" onclick="importJsonText(false)">Import (Replace)</button>
+        <button class="btn-secondary" onclick="importJsonText(true)">Import (Append)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="settingsModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>⚙️ Settings</h3>
+      <button class="modal-close" onclick="closeModal('settingsModal')">×</button>
+    </div>
+    <div>
+      <h4 style="margin-bottom: 12px;">Currency</h4>
+      <select id="currencySelect" style="width: 100%; padding: 10px; margin-bottom: 24px;">
+        <option value="INR">₹ Indian Rupee (INR)</option>
+        <option value="USD">$ US Dollar (USD)</option>
+        <option value="EUR">€ Euro (EUR)</option>
+      </select>
+
+      <h4 style="margin-bottom: 12px;">Auto Refresh</h4>
+      <select id="autoRefreshSelect" style="width: 100%; padding: 10px; margin-bottom: 24px;">
+        <option value="0">Disabled</option>
+        <option value="300000">Every 5 minutes</option>
+        <option value="900000">Every 15 minutes</option>
+        <option value="1800000">Every 30 minutes</option>
+        <option value="3600000">Every hour</option>
+      </select>
+
+      <h4 style="margin-bottom: 12px;">Data Management</h4>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button class="btn-danger" onclick="clearAllData()">
+          🗑️ Clear All Data
+        </button>
+        <button class="btn-warning" onclick="resetToDemo()">
+          🔄 Load Demo Data
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Goal Modal -->
+<div id="addGoalModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>➕ Add Financial Goal</h3>
+      <button class="modal-close" onclick="closeModal('addGoalModal')">×</button>
+    </div>
+    <form id="goalForm" onsubmit="addGoal(event)">
+      <div class="form-group">
+        <label>Goal Name *</label>
+        <input name="goalName" placeholder="e.g., Retirement Fund" required>
+      </div>
+      <div class="form-group">
+        <label>Target Amount (₹) *</label>
+        <input name="targetAmount" type="number" step="0.01" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Current Amount (₹)</label>
+        <input name="currentAmount" type="number" step="0.01" placeholder="0.00" value="0">
+      </div>
+      <div class="form-group">
+        <label>Target Date</label>
+        <input name="targetDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select name="category">
+          <option value="retirement">Retirement</option>
+          <option value="education">Education</option>
+          <option value="property">Property</option>
+          <option value="emergency">Emergency Fund</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary">Add Goal</button>
+    </form>
+  </div>
+</div>
+
+</div>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+/* ================= COMPLETE JAVASCRIPT WITH ALL FEATURES ================= */
+
+const renderMap = {};
+let allocationChartInstance = null;
+let performanceChartInstance = null;
+let assetAllocationChartInstance = null;
+let plDistributionChartInstance = null;
+let goalsChartInstance = null;
+let compoundChartInstance = null;
+let calculatorMode = 'lumpsum';
+
+// Utility Functions
+function switchTab(tab, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  
+  if (tab === 'analytics') updateAnalytics();
+  if (tab === 'overview') updateOverview();
+  if (tab === 'goals') renderGoals();
+  if (tab === 'transactions') renderTransactions();
+  if (tab === 'calculator') calculateCompound();
+  if (tab === 'tax') renderTaxCalculator();
+  if (tab === 'projection') { if (!parseFloat(document.getElementById('projPrincipal').value)) document.getElementById('projPrincipal').value = Math.round(currentPortfolioTotal()); renderProjection(); }
+}
+
+function saveToStorage(k, d) { 
+  const data = k === 'bank' && Array.isArray(d) ? d.map(normalizeBankRecord) : d;
+  localStorage.setItem(k, JSON.stringify(data));
+  updateLastModified();
+}
+
+function loadFromStorage(k) { 
+  let data;
+  try {
+    data = JSON.parse(localStorage.getItem(k) || '[]');
+  } catch (error) {
+    return [];
+  }
+  if (!Array.isArray(data)) return [];
+  if (k !== 'bank') return data;
+
+  const normalized = data.map(normalizeBankRecord);
+  if (JSON.stringify(normalized) !== JSON.stringify(data)) {
+    localStorage.setItem(k, JSON.stringify(normalized));
+  }
+  return normalized;
+}
+
+// Normalizes bank records so date fields imported under alternate keys
+// (e.g. "date", "startDate", "openDate") still populate Deposit / Maturity dates.
+function normalizeBankRecord(r) {
+  if (!r || typeof r !== 'object') return r;
+  const rec = { ...r };
+  const keyMap = Object.keys(rec).reduce((map, key) => {
+    map[key.toLowerCase().replace(/[\s_-]/g, '')] = key;
+    return map;
+  }, {});
+  const valueFor = (...aliases) => {
+    for (const alias of aliases) {
+      const actualKey = keyMap[alias.toLowerCase().replace(/[\s_-]/g, '')];
+      if (actualKey && rec[actualKey] != null && rec[actualKey] !== '') return rec[actualKey];
+    }
+    return '';
+  };
+  const deposit = valueFor('depositDate', 'date', 'startDate', 'openDate',
+                           'openingDate', 'investmentDate', 'fromDate');
+  if (deposit) rec.depositDate = normalizeDateString(deposit);
+  const maturity = valueFor('maturityDate', 'maturity', 'endDate', 'toDate');
+  if (maturity) rec.maturityDate = normalizeDateString(maturity);
+  if (!rec.maturityDate && rec.depositDate && rec.days) {
+    rec.maturityDate = calculateMaturityDate(rec.depositDate, rec.days);
+  }
+  if (rec.balance != null) rec.balance = Number(rec.balance) || 0;
+  if (rec.rate != null) rec.rate = Number(rec.rate) || 0;
+  if (rec.days != null) rec.days = Number(rec.days) || 0;
+  return rec;
+}
+
+// Accepts YYYY-MM-DD, DD/MM/YYYY, DD-MM-YYYY or ISO strings -> YYYY-MM-DD
+function normalizeDateString(v) {
+  if (!v) return '';
+  if (v instanceof Date) return isNaN(v) ? '' : v.toISOString().slice(0, 10);
+  const s = String(v).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
+  if (m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  const d = new Date(s);
+  return isNaN(d) ? '' : d.toISOString().slice(0, 10);
+}
+
+function updateLastModified() {
+  const now = new Date();
+  localStorage.setItem('lastModified', now.toISOString());
+  document.getElementById('lastUpdated').textContent = formatDate(now);
+}
+
+function copyLast(id) {
+  const f = document.getElementById(id);
+  const t = id.replace('Form', '');
+  const d = loadFromStorage(t);
+  if (d.length) {
+    Object.keys(d.at(-1)).forEach(k => {
+      if (f[k]) f[k].value = d.at(-1)[k];
+    });
+    showToast('Last entry copied', 'Form filled with last entry data', 'success');
+  } else {
+    showToast('No data found', 'No previous entries to copy', 'warning');
+  }
+}
+
+function calculateMaturityDate(startDate, days) {
+  if (!startDate || !days) return '';
+  const d = new Date(startDate);
+  d.setDate(d.getDate() + Number(days));
+  return d.toISOString().split('T')[0];
+}
+
+function formatCurrency(value) {
+  const currency = localStorage.getItem('currency') || 'INR';
+  const symbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : '€';
+  return symbol + Number(value).toLocaleString('en-IN', { 
+    minimumFractionDigits: 2, 
+    maximumFractionDigits: 2 
+  });
+}
+
+function formatDate(date) {
+  if (!date) return '-';
+  const d = new Date(date);
+  const now = new Date();
+  const diff = now - d;
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  if (days < 7) return `${days}d ago`;
+  
+  return d.toLocaleDateString('en-IN');
+}
+
+function showToast(title, message, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  
+  const icons = {
+    success: '✅',
+    error: '❌',
+    warning: '⚠️',
+    info: 'ℹ️'
+  };
+  
+  toast.innerHTML = `
+    <div class="toast-icon">${icons[type]}</div>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+  `;
+  
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 5000);
+}
+
+function filterTable(tableId, searchValue) {
+  const table = document.getElementById(tableId);
+  const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+  
+  for (let row of rows) {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(searchValue.toLowerCase()) ? '' : 'none';
+  }
+}
+
+function filterByCategory(category, filter) {
+  const data = loadFromStorage(category);
+  const table = document.getElementById(category + 'Table');
+  const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+  
+  if (!filter) {
+    for (let row of rows) row.style.display = '';
+    return;
+  }
+  
+  Array.from(rows).forEach((row, i) => {
+    const item = data[i];
+    if (!item) return;
+    
+    const qty = item.qty || item.units || 0;
+    const avgCost = item.avgCost || item.nav || 0;
+    const currentPrice = item.currentPrice || item.currentNav || 0;
+    const pl = (currentPrice - avgCost) * qty;
+    
+    if (filter === 'profit' && pl >= 0) {
+      row.style.display = '';
+    } else if (filter === 'loss' && pl < 0) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
+
+// Table Sorting
+let sortDirection = {};
+
+function sortTable(tableId, column) {
+  const table = document.getElementById(tableId);
+  const tbody = table.getElementsByTagName('tbody')[0];
+  const rows = Array.from(tbody.getElementsByTagName('tr'));
+  const key = `${tableId}_${column}`;
+  
+  sortDirection[key] = !sortDirection[key];
+  const direction = sortDirection[key] ? 1 : -1;
+  
+  rows.sort((a, b) => {
+    const aVal = a.cells[column].textContent.replace(/[₹,]/g, '');
+    const bVal = b.cells[column].textContent.replace(/[₹,]/g, '');
+    
+    const aNum = parseFloat(aVal);
+    const bNum = parseFloat(bVal);
+    
+    if (!isNaN(aNum) && !isNaN(bNum)) {
+      return (aNum - bNum) * direction;
+    }
+    return aVal.localeCompare(bVal) * direction;
+  });
+  
+  rows.forEach(row => tbody.appendChild(row));
+  
+  const ths = table.getElementsByTagName('th');
+  Array.from(ths).forEach((th, i) => {
+    th.classList.remove('sort-asc', 'sort-desc');
+    if (i === column) {
+      th.classList.add(sortDirection[key] ? 'sort-asc' : 'sort-desc');
+    }
+  });
+}
+
+// Setup Function for Stocks, Crypto, MF
+function setup(formId, tableId, tab, fields, type) {
+  const form = document.getElementById(formId);
+  const body = document.querySelector(`#${tableId} tbody`);
+
+  function render() {
+    body.innerHTML = '';
+    const data = loadFromStorage(tab);
+    let inv = 0, pl = 0, qty1 = 0, currentValue = 0;
+
+    data.forEach((r, i) => {
+      let tr = document.createElement('tr');
+
+      if (type === 'trade') {
+        const invested = (r.qty || r.units) * (r.avgCost || r.nav);
+        const currentPrice = r.currentPrice || r.currentNav || 0;
+        const currValue = (r.qty || r.units) * currentPrice;
+        const profit = currValue - invested;
+        const profitPercent = invested > 0 ? (profit / invested * 100) : 0;
+        
+        inv += invested;
+        pl += profit;
+        currentValue += currValue;
+        qty1 += (r.qty || r.units);
+
+        const plClass = profit >= 0 ? 'profit' : 'loss';
+        const plSign = profit >= 0 ? '↑' : '↓';
+
+        tr.innerHTML = `
+          <td><strong>${r.name}</strong></td>
+          <td><span class="badge badge-info">${r.symbol}</span></td>
+          <td>${(r.qty || r.units).toFixed(4)}</td>
+          <td>${formatCurrency(r.avgCost || r.nav)}</td>
+          <td>${formatCurrency(invested)}</td>
+          <td>${formatCurrency(currentPrice)}</td>
+          <td><strong>${formatCurrency(currValue)}</strong></td>
+          <td class="${plClass}">${plSign} ${formatCurrency(Math.abs(profit))}</td>
+          <td class="${plClass}"><strong>${profitPercent.toFixed(2)}%</strong></td>
+          <td>${formatDate(r.date)}</td>
+          <td>
+            <button class="btn-danger btn-small" onclick="del('${tab}',${i})" title="Delete">
+              🗑️
+            </button>
+          </td>
+        `;
+      }
+
+      body.appendChild(tr);
+    });
+
+    if (tab === 'stocks') {
+      stocksTotalRows.innerText = data.length + ' Rows';
+      stocksTotalQty.innerText = qty1.toFixed(2);
+      stocksTotalInvested.innerText = formatCurrency(inv);
+      stocksTotalValue.innerText = formatCurrency(currentValue);
+      stocksTotalPL.innerText = formatCurrency(pl);
+      const plPercent = inv > 0 ? (pl / inv * 100) : 0;
+      stocksTotalPLPercent.innerText = plPercent.toFixed(2) + '%';
+      stocksTotalPL.className = pl >= 0 ? 'profit' : 'loss';
+      stocksTotalPLPercent.className = pl >= 0 ? 'profit' : 'loss';
+    }
+
+    if (tab === 'crypto') {
+      cryptoTotalRows.innerText = data.length + ' Rows';
+      cryptoTotalQty.innerText = qty1.toFixed(8);
+      cryptoTotalInvested.innerText = formatCurrency(inv);
+      cryptoTotalValue.innerText = formatCurrency(currentValue);
+      cryptoTotalPL.innerText = formatCurrency(pl);
+      const plPercent = inv > 0 ? (pl / inv * 100) : 0;
+      cryptoTotalPLPercent.innerText = plPercent.toFixed(2) + '%';
+      cryptoTotalPL.className = pl >= 0 ? 'profit' : 'loss';
+      cryptoTotalPLPercent.className = pl >= 0 ? 'profit' : 'loss';
+    }
+
+    if (tab === 'mf') {
+      mfTotalRows.innerText = data.length + ' Rows';
+      mfTotalUnits.innerText = qty1.toFixed(4);
+      mfTotalInvested.innerText = formatCurrency(inv);
+      mfTotalValue.innerText = formatCurrency(currentValue);
+      mfTotalPL.innerText = formatCurrency(pl);
+      const plPercent = inv > 0 ? (pl / inv * 100) : 0;
+      mfTotalPLPercent.innerText = plPercent.toFixed(2) + '%';
+      mfTotalPL.className = pl >= 0 ? 'profit' : 'loss';
+      mfTotalPLPercent.className = pl >= 0 ? 'profit' : 'loss';
+    }
+
+    updateDashboard();
+  }
+
+  form.onsubmit = e => {
+    e.preventDefault();
+    const o = {};
+    fields.forEach(f => {
+      if (!form[f]) return;
+      o[f] = form[f].type === 'number' ? +form[f].value : form[f].value;
+    });
+    if (!o.currentPrice) o.currentPrice = 0;
+    if (!o.currentNav) o.currentNav = 0;
+    o.addedDate = new Date().toISOString();
+    
+    const d = loadFromStorage(tab);
+    d.push(o);
+    saveToStorage(tab, d);
+    form.reset();
+    render();
+    showToast('Success', `${tab.charAt(0).toUpperCase() + tab.slice(1)} added successfully!`, 'success');
+  };
+
+  renderMap[tab] = render;
+  render();
+}
+
+// Enhanced Bank Setup Function
+function setupEnhancedBank() {
+  const form = document.getElementById('bankForm');
+  const body = document.querySelector('#bankTable tbody');
+
+  const depositDateInput = document.getElementById('depositDateInput');
+  const tenureInput = document.getElementById('tenureInput');
+  const maturityDatePreview = document.getElementById('maturityDatePreview');
+
+  function updateMaturityPreview() {
+    if (depositDateInput.value && tenureInput.value) {
+      const maturityDate = calculateMaturityDate(depositDateInput.value, tenureInput.value);
+      maturityDatePreview.value = maturityDate;
+    }
+  }
+
+  if (depositDateInput) depositDateInput.addEventListener('change', updateMaturityPreview);
+  if (tenureInput) tenureInput.addEventListener('input', updateMaturityPreview);
+
+  function render() {
+    body.innerHTML = '';
+    const data = loadFromStorage('bank');
+    
+    let totalBalance = 0;
+    let totalInterest = 0;
+    let totalMaturity = 0;
+    let totalWeightedRate = 0;
+    let totalMonthlyInterest = 0;
+    let maturingSoon = 0;
+    
+    const today = new Date();
+
+    data.forEach((r, i) => {
+      const depositRaw = normalizeDateString(r.depositDate || r.date || '');
+      const depositDate = depositRaw ? new Date(depositRaw) : null;
+      let maturityDate = r.maturityDate ? new Date(normalizeDateString(r.maturityDate)) : null;
+      
+      if (!maturityDate && depositDate && r.days) {
+        maturityDate = new Date(calculateMaturityDate(depositRaw, r.days));
+      }
+      
+      const compoundingFrequency = r.compoundingFrequency || 4;
+      const rate = r.rate || 0;
+      const days = r.days || 0;
+      const years = days / 365;
+      
+      let maturityValue;
+      if (rate > 0 && days > 0) {
+        maturityValue = r.balance * Math.pow(1 + (rate/100)/compoundingFrequency, compoundingFrequency * years);
+      } else {
+        maturityValue = r.balance;
+      }
+      
+      const interestEarned = maturityValue - r.balance;
+      const monthlyInterest = days > 0 ? interestEarned / (days / 30) : 0;
+      const roi = r.balance > 0 ? (interestEarned / r.balance * 100) : 0;
+      
+      totalBalance += r.balance;
+      totalInterest += interestEarned;
+      totalMaturity += maturityValue;
+      totalWeightedRate += r.balance * (r.rate || 0);
+      totalMonthlyInterest += monthlyInterest;
+
+      let daysRemaining = 0;
+      let progressPercent = 0;
+      let status = 'Active';
+      let statusClass = 'status-active';
+      
+      if (depositDate && maturityDate) {
+        daysRemaining = Math.ceil((maturityDate - today) / (1000 * 60 * 60 * 24));
+        
+        const totalDays = r.days || 0;
+        const elapsedDays = Math.ceil((today - depositDate) / (1000 * 60 * 60 * 24));
+        progressPercent = totalDays > 0 ? Math.min((elapsedDays / totalDays) * 100, 100) : 0;
+        
+        if (daysRemaining <= 0) {
+          status = 'Matured';
+          statusClass = 'status-matured';
+          progressPercent = 100;
+        } else if (daysRemaining <= 30) {
+          status = 'Maturing Soon';
+          statusClass = 'status-maturing';
+          maturingSoon++;
+        }
+      }
+
+      const accountTypeClass = r.accountType ? 
+        `account-type-${r.accountType.toLowerCase().replace(/\s+/g, '-')}` : 
+        'account-type-savings';
+
+      const tr = document.createElement('tr');
+      tr.className = accountTypeClass;
+      tr.innerHTML = `
+        <td><strong>${r.bankName}</strong></td>
+        <td><span class="badge badge-info">${r.accountType || 'Savings'}</span></td>
+        <td>${r.accountNumber ? '****' + r.accountNumber.slice(-4) : '-'}</td>
+        <td>${r.accountHolder}</td>
+        <td><strong>${formatCurrency(r.balance)}</strong></td>
+        <td><span class="badge badge-success">${rate.toFixed(2)}%</span></td>
+        <td>${depositDate ? depositDate.toLocaleDateString('en-IN') : '-'}</td>
+        <td>${days ? days + ' days (' + (days/365).toFixed(1) + 'y)' : '-'}</td>
+        <td>${maturityDate ? maturityDate.toLocaleDateString('en-IN') : '-'}</td>
+        <td>
+          ${daysRemaining > 0 ? 
+            `<span class="days-remaining">${daysRemaining} days</span>` : 
+            daysRemaining === 0 ? '<span class="days-remaining warning">Today</span>' :
+            '<span class="days-remaining" style="background: rgba(239, 68, 68, 0.2); color: var(--danger);">Matured</span>'}
+        </td>
+        <td style="min-width: 120px;">
+          <div class="progress-indicator">
+            <div class="progress-indicator-fill" style="width: ${progressPercent}%"></div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; text-align: center;">
+            ${progressPercent.toFixed(0)}%
+          </div>
+        </td>
+        <td><span class="monthly-interest">${formatCurrency(monthlyInterest)}/mo</span></td>
+        <td class="profit"><strong>${formatCurrency(interestEarned)}</strong></td>
+        <td><strong style="font-size: 15px;" class="profit">${formatCurrency(maturityValue)}</strong></td>
+        <td><span class="badge ${roi >= 0 ? 'badge-success' : 'badge-danger'}">${roi.toFixed(2)}%</span></td>
+        <td><span class="status-badge ${statusClass}">${status}</span></td>
+        <td>${r.branch || '-'}</td>
+        <td>${r.nominee || '-'}</td>
+        <td>
+          <button class="btn-info btn-small" onclick="viewBankDetails(${i})" title="View Details" style="margin-bottom: 4px;">
+            👁️ View
+          </button>
+          <button class="btn-danger btn-small" onclick="del('bank',${i})" title="Delete">
+            🗑️
+          </button>
+        </td>
+      `;
+      
+      body.appendChild(tr);
+    });
+
+    const avgRate = totalBalance > 0 ? (totalWeightedRate / totalBalance) : 0;
+    const avgROI = totalBalance > 0 ? (totalInterest / totalBalance * 100) : 0;
+    
+    document.getElementById('bankTotalRows').textContent = data.length;
+    document.getElementById('bankTotalBalance').textContent = formatCurrency(totalBalance);
+    document.getElementById('bankAvgRate').textContent = avgRate.toFixed(2) + '%';
+    document.getElementById('bankTotalMonthly').textContent = formatCurrency(totalMonthlyInterest);
+    document.getElementById('bankTotalInterest').textContent = formatCurrency(totalInterest);
+    document.getElementById('bankTotalMaturity').textContent = formatCurrency(totalMaturity);
+    document.getElementById('bankAvgROI').textContent = avgROI.toFixed(2) + '%';
+
+    document.getElementById('bankSummaryBalance').textContent = formatCurrency(totalBalance);
+    document.getElementById('bankSummaryMaturity').textContent = formatCurrency(totalMaturity);
+    document.getElementById('bankSummaryInterest').textContent = formatCurrency(totalInterest);
+    document.getElementById('bankSummaryAvgRate').textContent = avgRate.toFixed(2) + '%';
+    document.getElementById('bankSummaryAccounts').textContent = data.length;
+    document.getElementById('bankSummaryMaturingSoon').textContent = maturingSoon;
+    document.getElementById('bankMonthlyIncome').textContent = formatCurrency(totalMonthlyInterest);
+    document.getElementById('bankAnnualReturns').textContent = formatCurrency(totalMonthlyInterest * 12);
+
+    updateDashboard();
+  }
+
+  form.onsubmit = e => {
+    e.preventDefault();
+    
+    const formData = {
+      bankName: form.bankName.value,
+      accountType: form.accountType.value,
+      accountNumber: form.accountNumber.value,
+      accountHolder: form.accountHolder.value,
+      balance: parseFloat(form.balance.value),
+      rate: parseFloat(form.rate.value) || 0,
+      depositDate: form.depositDate.value,
+      days: parseInt(form.days.value) || 0,
+      maturityDate: form.maturityDate.value || calculateMaturityDate(form.depositDate.value, form.days.value),
+      compoundingFrequency: parseInt(form.compoundingFrequency.value) || 4,
+      branch: form.branch.value,
+      nominee: form.nominee.value,
+      certificateNo: form.certificateNo.value,
+      tds: form.tds.value,
+      autoRenewal: form.autoRenewal.value,
+      notes: form.notes.value,
+      addedDate: new Date().toISOString()
+    };
+    
+    const data = loadFromStorage('bank');
+    data.push(formData);
+    saveToStorage('bank', data);
+    form.reset();
+    render();
+    showToast('Account Added', 'Bank account added successfully with all details!', 'success');
+  };
+
+  renderMap['bank'] = render;
+  render();
+}
+
+// Setup Home Function
+function setupHome() {
+  const form = document.getElementById('homeForm');
+  const body = document.querySelector('#homeTable tbody');
+
+  function render() {
+    body.innerHTML = '';
+    const data = loadFromStorage('home');
+    let amt = 0;
+
+    data.forEach((r, i) => {
+      amt += r.amount;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${r.name}</strong></td>
+        <td>${r.account}</td>
+        <td>${formatCurrency(r.amount)}</td>
+        <td>${formatDate(r.date)}</td>
+        <td>
+          <button class="btn-danger btn-small" onclick="del('home',${i})" title="Delete">
+            🗑️
+          </button>
+        </td>
+      `;
+      body.appendChild(tr);
+    });
+
+    homeTotalRows.innerText = data.length + ' Rows';
+    homeTotalAmount.innerText = formatCurrency(amt);
+    updateDashboard();
+  }
+
+  form.onsubmit = e => {
+    e.preventDefault();
+    const o = {
+      name: form.name.value,
+      account: form.account.value,
+      amount: parseFloat(form.amount.value),
+      date: form.date.value,
+      addedDate: new Date().toISOString()
+    };
+    
+    const d = loadFromStorage('home');
+    d.push(o);
+    saveToStorage('home', d);
+    form.reset();
+    render();
+    showToast('Success', 'Home investment added successfully!', 'success');
+  };
+
+  renderMap['home'] = render;
+  render();
+}
+
+// Setup Loan Function (isolated - never counted in portfolio totals)
+function setupLoan() {
+  const form = document.getElementById('loanForm');
+  const body = document.querySelector('#loanTable tbody');
+
+  function monthsElapsed(dateStr) {
+    if (!dateStr) return 0;
+    const d = new Date(dateStr);
+    if (isNaN(d)) return 0;
+    const now = new Date();
+    let m = (now.getFullYear() - d.getFullYear()) * 12 + (now.getMonth() - d.getMonth());
+    if (now.getDate() < d.getDate()) m -= 1;
+    return Math.max(0, m);
+  }
+
+  function render() {
+    body.innerHTML = '';
+    const data = loadFromStorage('loan');
+    let amt = 0, emiTotal = 0, outstandingTotal = 0;
+
+    data.forEach((r, i) => {
+      const amount = parseFloat(r.amount) || 0;
+      const emi = parseFloat(r.emi) || 0;
+      const tenure = parseInt(r.tenure) || 0;
+      const paidMonths = tenure ? Math.min(tenure, monthsElapsed(r.loanDate)) : monthsElapsed(r.loanDate);
+      const paid = paidMonths * emi;
+      const totalPayable = tenure ? tenure * emi : amount;
+      const outstanding = Math.max(0, totalPayable - paid);
+
+      amt += amount;
+      emiTotal += emi;
+      outstandingTotal += outstanding;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${r.name}</strong></td>
+        <td>${r.lender || '-'}</td>
+        <td>${formatCurrency(amount)}</td>
+        <td>${formatDate(r.loanDate)}</td>
+        <td>${formatCurrency(emi)}</td>
+        <td>${r.rate ? r.rate + '%' : '-'}</td>
+        <td>${tenure ? tenure : '-'}</td>
+        <td>${formatCurrency(paid)} <span class="badge badge-info">${paidMonths} EMIs</span></td>
+        <td class="loss"><strong>${formatCurrency(outstanding)}</strong></td>
+        <td>
+          <button class="btn-info btn-small" onclick="openLoanSchedule(${i})" title="Amortisation schedule">
+            📅
+          </button>
+          <button class="btn-danger btn-small" onclick="del('loan',${i})" title="Delete">
+            🗑️
+          </button>
+        </td>
+      `;
+      body.appendChild(tr);
+    });
+
+    document.getElementById('loanTotalRows').innerText = data.length + ' Rows';
+    document.getElementById('loanTotalAmount').innerText = formatCurrency(amt);
+    document.getElementById('loanTotalEmi').innerText = formatCurrency(emiTotal);
+    document.getElementById('loanTotalOutstanding').innerText = formatCurrency(outstandingTotal);
+  }
+
+  form.onsubmit = e => {
+    e.preventDefault();
+    const o = {
+      name: form.name.value,
+      lender: form.lender.value,
+      amount: parseFloat(form.amount.value),
+      loanDate: form.loanDate.value,
+      emi: parseFloat(form.emi.value),
+      rate: form.rate.value ? parseFloat(form.rate.value) : '',
+      tenure: form.tenure.value ? parseInt(form.tenure.value) : '',
+      notes: form.notes.value,
+      addedDate: new Date().toISOString()
+    };
+    const d = loadFromStorage('loan');
+    d.push(o);
+    saveToStorage('loan', d);
+    form.reset();
+    render();
+    showToast('Success', 'Loan added successfully!', 'success');
+  };
+
+  renderMap['loan'] = render;
+  render();
+}
+
+function del(tab, i) {
+  if (!confirm('Are you sure you want to delete this entry?')) return;
+  const d = loadFromStorage(tab);
+  d.splice(i, 1);
+  saveToStorage(tab, d);
+  renderMap[tab]();
+  showToast('Deleted', 'Entry removed successfully', 'error');
+}
+
+// View Bank Details Function
+function viewBankDetails(index) {
+  const data = loadFromStorage('bank');
+  const account = data[index];
+  
+  if (!account) return;
+  
+  const depositRaw = normalizeDateString(account.depositDate || account.date || '');
+  const depositDate = depositRaw ? new Date(depositRaw) : null;
+  const maturityRaw = normalizeDateString(account.maturityDate || '') ||
+    (depositRaw && account.days ? calculateMaturityDate(depositRaw, account.days) : '');
+  const maturityDate = maturityRaw ? new Date(maturityRaw) : null;
+  const today = new Date();
+  
+  const rate = account.rate || 0;
+  const days = account.days || 0;
+  const years = days / 365;
+  const compoundingFrequency = account.compoundingFrequency || 4;
+  
+  let maturityValue = account.balance;
+  if (rate > 0 && days > 0) {
+    maturityValue = account.balance * Math.pow(1 + (rate/100)/compoundingFrequency, compoundingFrequency * years);
+  }
+  
+  const interestEarned = maturityValue - account.balance;
+  const monthlyInterest = interestEarned / (days / 30);
+  const roi = (interestEarned / account.balance * 100);
+  
+  let daysRemaining = 0;
+  if (maturityDate) {
+    daysRemaining = Math.ceil((maturityDate - today) / (1000 * 60 * 60 * 24));
+  }
+  
+  const detailsHTML = `
+    <div class="modal active" id="bankDetailsModal">
+      <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+          <h3>🏦 ${account.bankName} - Account Details</h3>
+          <button class="modal-close" onclick="closeModal('bankDetailsModal')">×</button>
+        </div>
+        
+        <div style="display: grid; gap: 20px;">
+          <div class="chart-card" style="padding: 20px;">
+            <h4 style="margin-bottom: 16px; color: var(--accent);">📋 Account Information</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Bank Name</div>
+                <div style="font-weight: 600; margin-top: 4px;">${account.bankName}</div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Account Type</div>
+                <div style="font-weight: 600; margin-top: 4px;"><span class="badge badge-info">${account.accountType || 'Savings'}</span></div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Account Number</div>
+                <div style="font-weight: 600; margin-top: 4px;">${account.accountNumber || 'N/A'}</div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Account Holder</div>
+                <div style="font-weight: 600; margin-top: 4px;">${account.accountHolder}</div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Branch</div>
+                <div style="font-weight: 600; margin-top: 4px;">${account.branch || 'N/A'}</div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Nominee</div>
+                <div style="font-weight: 600; margin-top: 4px;">${account.nominee || 'Not Added'}</div>
+              </div>
+              ${account.certificateNo ? `
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Certificate No.</div>
+                <div style="font-weight: 600; margin-top: 4px;">${account.certificateNo}</div>
+              </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <div class="chart-card" style="padding: 20px;">
+            <h4 style="margin-bottom: 16px; color: var(--success);">💰 Financial Summary</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Principal</div>
+                <div style="font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--accent);">
+                  ${formatCurrency(account.balance)}
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Interest Rate</div>
+                <div style="font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--success);">
+                  ${rate.toFixed(2)}% p.a.
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">ROI</div>
+                <div style="font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--success);">
+                  ${roi.toFixed(2)}%
+                </div>
+              </div>
+            </div>
+            <hr style="border: none; border-top: 1px solid var(--border); margin: 16px 0;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Monthly Interest</div>
+                <div style="font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--success);">
+                  ${formatCurrency(monthlyInterest)}
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Total Interest</div>
+                <div style="font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--success);">
+                  ${formatCurrency(interestEarned)}
+                </div>
+              </div>
+              <div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Maturity Value</div>
+                <div style="font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--success);">
+                  ${formatCurrency(maturityValue)}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="chart-card" style="padding: 20px;">
+              <h4 style="margin-bottom: 16px; color: var(--info);">📅 Timeline</h4>
+              <div style="display: grid; gap: 12px;">
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Deposit Date</div>
+                  <div style="font-weight: 600; margin-top: 4px;">
+                    ${depositDate ? depositDate.toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'}) : 'N/A'}
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Maturity Date</div>
+                  <div style="font-weight: 600; margin-top: 4px;">
+                    ${maturityDate ? maturityDate.toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'}) : 'N/A'}
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Tenure</div>
+                  <div style="font-weight: 600; margin-top: 4px;">
+                    ${days} days (${(days/365).toFixed(1)} years)
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Days Remaining</div>
+                  <div style="font-weight: 600; margin-top: 4px; color: ${daysRemaining > 30 ? 'var(--success)' : daysRemaining > 0 ? 'var(--warning)' : 'var(--danger)'};">
+                    ${daysRemaining > 0 ? daysRemaining + ' days' : 'Matured'}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chart-card" style="padding: 20px;">
+              <h4 style="margin-bottom: 16px; color: var(--warning);">⚙️ Settings</h4>
+              <div style="display: grid; gap: 12px;">
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Compounding</div>
+                  <div style="font-weight: 600; margin-top: 4px;">
+                    ${compoundingFrequency === 1 ? 'Annually' : 
+                      compoundingFrequency === 2 ? 'Half-Yearly' :
+                      compoundingFrequency === 4 ? 'Quarterly' : 'Monthly'}
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">TDS Applicable</div>
+                  <div style="font-weight: 600; margin-top: 4px;">
+                    <span class="badge ${account.tds === 'Yes' ? 'badge-warning' : 'badge-success'}">
+                      ${account.tds || 'No'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Auto Renewal</div>
+                  <div style="font-weight: 600; margin-top: 4px;">
+                    <span class="badge badge-info">${account.autoRenewal || 'No'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          ${account.notes ? `
+          <div class="chart-card" style="padding: 20px;">
+            <h4 style="margin-bottom: 12px;">📝 Notes</h4>
+            <p style="color: var(--text-secondary);">${account.notes}</p>
+          </div>
+          ` : ''}
+
+          <div style="display: flex; gap: 12px; justify-content: flex-end;">
+            <button class="btn-secondary" onclick="closeModal('bankDetailsModal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  const existingModal = document.getElementById('bankDetailsModal');
+  if (existingModal) existingModal.remove();
+  
+  document.body.insertAdjacentHTML('beforeend', detailsHTML);
+}
+
+// Bank Utility Functions
+function calculateAllMaturity() {
+  const data = loadFromStorage('bank');
+  let updated = 0;
+  
+  data.forEach(account => {
+    if (account.depositDate && account.days) {
+      account.maturityDate = calculateMaturityDate(account.depositDate, account.days);
+      updated++;
+    }
+  });
+  
+  if (updated > 0) {
+    saveToStorage('bank', data);
+    renderMap['bank']();
+    showToast('Recalculated', `${updated} maturity dates updated successfully`, 'success');
+  } else {
+    showToast('No Updates', 'All accounts already have valid data', 'info');
+  }
+}
+
+function exportBankToCSV() {
+  const data = loadFromStorage('bank');
+  if (data.length === 0) {
+    showToast('No Data', 'No bank accounts to export', 'warning');
+    return;
+  }
+
+  let csv = 'Bank Name,Account Type,Account Number,Holder,Principal,Rate %,Deposit Date,Tenure,Maturity Date,Interest,Maturity Value,Branch,Nominee,Notes\n';
+  
+  data.forEach(account => {
+    const rate = account.rate || 0;
+    const days = account.days || 0;
+    const years = days / 365;
+    const compoundingFrequency = account.compoundingFrequency || 4;
+    
+    let maturityValue = account.balance;
+    if (rate > 0 && days > 0) {
+      maturityValue = account.balance * Math.pow(1 + (rate/100)/compoundingFrequency, compoundingFrequency * years);
+    }
+    
+    const interestEarned = maturityValue - account.balance;
+    
+    csv += `"${account.bankName}","${account.accountType || 'Savings'}","${account.accountNumber || 'N/A'}","${account.accountHolder}",${account.balance},${rate},"${account.depositDate || 'N/A'}","${days} days","${account.maturityDate || 'N/A'}",${interestEarned.toFixed(2)},${maturityValue.toFixed(2)},"${account.branch || 'N/A'}","${account.nominee || 'N/A'}","${account.notes || ''}"\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `bank-accounts-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('Export Complete', 'Bank accounts exported successfully', 'success');
+}
+
+function printBankReport() {
+  window.print();
+}
+
+// Initialize all sections
+setup('stocksForm', 'stocksTable', 'stocks', ['name', 'symbol', 'qty', 'avgCost', 'currentPrice', 'date', 'notes'], 'trade');
+setup('cryptoForm', 'cryptoTable', 'crypto', ['name', 'symbol', 'qty', 'avgCost', 'currentPrice', 'date', 'notes'], 'trade');
+setup('mfForm', 'mfTable', 'mf', ['name', 'symbol', 'units', 'nav', 'currentNav', 'date', 'notes'], 'trade');
+setupEnhancedBank();
+setupHome();
+setupLoan();
+
+// Continue with all remaining functions (Backup, Restore, Price Refresh, Dashboard, Calculator, Analytics, Goals, Transactions, etc.)
+// Due to character limit, I'm showing the key structure. The rest of the functions remain exactly as in your original code.
+
+// Backup & Restore (full snapshot: every data set + preferences)
+const BACKUP_ARRAY_KEYS = ['stocks', 'crypto', 'mf', 'bank', 'home', 'loan', 'goals'];
+const BACKUP_PREF_KEYS = ['theme', 'currency', 'autoRefresh', 'lastModified'];
+
+function backupData() {
+  const data = {
+    backupDate: new Date().toISOString(),
+    version: '3.0',
+    settings: {},
+    netWorthHistory: []
+  };
+  BACKUP_ARRAY_KEYS.forEach(k => { data[k] = loadFromStorage(k); });
+  BACKUP_PREF_KEYS.forEach(k => {
+    const v = localStorage.getItem(k);
+    if (v !== null) data.settings[k] = v;
+  });
+  try { data.netWorthHistory = JSON.parse(localStorage.getItem('netWorthHistory') || '[]'); } catch (e) { data.netWorthHistory = []; }
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  showToast('Backup Created', 'Your portfolio data has been backed up successfully', 'success');
+}
+
+function openImportJson() {
+  document.getElementById('importJsonModal').classList.add('active');
+}
+
+function importJsonText(append) {
+  const raw = document.getElementById('importJsonText').value.trim();
+  if (!raw) { showToast('Empty', 'Paste some JSON first', 'error'); return; }
+  let parsed;
+  try {
+    // Tolerate a trailing wrapper like ( ... ) or a stray trailing comma
+    let cleaned = raw.replace(/^\(+/, '').replace(/\)+$/, '').trim();
+    cleaned = cleaned.replace(/,\s*([}\]])/g, '$1');
+    if (/^"?\w+"?\s*:/.test(cleaned) && !cleaned.startsWith('{')) cleaned = '{' + cleaned + '}';
+    parsed = JSON.parse(cleaned);
+  } catch (err) {
+    showToast('Invalid JSON', 'Could not parse the pasted data', 'error');
+    return;
+  }
+
+  if (Array.isArray(parsed)) parsed = { bank: parsed };
+  const keys = ['stocks', 'crypto', 'mf', 'bank', 'home', 'loan', 'goals'];
+  let imported = 0;
+  keys.forEach(k => {
+    if (!Array.isArray(parsed[k])) return;
+    const incoming = k === 'bank' ? parsed[k].map(normalizeBankRecord) : parsed[k];
+    const next = append ? loadFromStorage(k).concat(incoming) : incoming;
+    saveToStorage(k, next);
+    imported += incoming.length;
+  });
+
+  if (!imported) { showToast('Nothing Imported', 'No stocks/crypto/mf/bank/home/goals arrays found', 'error'); return; }
+  Object.values(renderMap).forEach(fn => fn());
+  updateDashboard();
+  closeModal('importJsonModal');
+  showToast('Imported', imported + ' record(s) loaded successfully', 'success');
+}
+
+function restoreData(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      let restored = 0;
+      BACKUP_ARRAY_KEYS.forEach(k => {
+        if (Array.isArray(d[k])) { saveToStorage(k, d[k]); restored += d[k].length; }
+      });
+      if (Array.isArray(d.netWorthHistory)) {
+        localStorage.setItem('netWorthHistory', JSON.stringify(d.netWorthHistory));
+      }
+      if (d.settings && typeof d.settings === 'object') {
+        BACKUP_PREF_KEYS.forEach(k => {
+          if (d.settings[k] !== undefined) localStorage.setItem(k, d.settings[k]);
+        });
+        if (d.settings.theme) applyTheme(d.settings.theme);
+      }
+      Object.values(renderMap).forEach(fn => fn());
+      updateDashboard();
+      showToast('Data Restored', restored + ' record(s) plus settings restored successfully', 'success');
+
+    } catch (err) {
+      showToast('Error', 'Failed to restore data. Please check the file format.', 'error');
+    }
+  };
+  r.readAsText(f);
+}
+
+// Price Refresh Functions
+async function refreshStockPrices() {
+  const btn = document.getElementById('stocksRefreshBtn');
+  btn.innerHTML = '<span class="loading"></span> Refreshing...';
+  
+  const stocks = loadFromStorage('stocks');
+  let updated = 0;
+  
+  for (let i = 0; i < stocks.length; i++) {
+    const s = stocks[i];
+    try {
+      const res = await fetch(`https://corsproxy.io/?https://www.nseindia.com/api/quote-equity?symbol=${s.symbol.toUpperCase()}`);
+      const data = await res.json();
+
+      if (data.info && data.info.lastPrice) {
+        s.currentPrice = parseFloat(data.info.lastPrice);
+        updated++;
+      } else if (data.priceInfo && data.priceInfo.lastPrice) {
+        s.currentPrice = parseFloat(data.priceInfo.lastPrice);
+        updated++;
+      }
+    } catch (e) {
+      console.error(`Failed to fetch price for ${s.symbol}`, e);
+    }
+  }
+
+  saveToStorage('stocks', stocks);
+  renderMap['stocks']();
+  btn.innerHTML = '🔄 Refresh Prices';
+  showToast('Stock Prices Updated', `${updated} stock prices refreshed successfully`, 'success');
+}
+
+async function refreshCryptoPrices() {
+  const btn = document.getElementById('cryptoRefreshBtn');
+  btn.innerHTML = '<span class="loading"></span> Refreshing...';
+  
+  const crypto = loadFromStorage('crypto');
+  let updated = 0;
+
+  const symbols = crypto.map(c => c.symbol.toLowerCase()).join(',');
+  
+  try {
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${symbols}&vs_currencies=inr`);
+    const data = await res.json();
+    
+    crypto.forEach(c => {
+      const symbol = c.symbol.toLowerCase();
+      if (data[symbol] && data[symbol].inr) {
+        c.currentPrice = parseFloat(data[symbol].inr);
+        updated++;
+      }
+    });
+  } catch (e) {
+    console.error('Failed to fetch crypto prices', e);
+  }
+
+  saveToStorage('crypto', crypto);
+  renderMap['crypto']();
+  btn.innerHTML = '🔄 Refresh Prices';
+  showToast('Crypto Prices Updated', `${updated} crypto prices refreshed successfully`, 'success');
+}
+
+async function refreshMFPrices() {
+  const btn = document.getElementById('mfRefreshBtn');
+  btn.innerHTML = '<span class="loading"></span> Refreshing...';
+  
+  const mfs = loadFromStorage('mf');
+  let updated = 0;
+
+  for (let i = 0; i < mfs.length; i++) {
+    const m = mfs[i];
+    try {
+      const res = await fetch(`https://api.mfapi.in/mf/${m.symbol}`);
+      const data = await res.json();
+      if (data && data.data && data.data.length) {
+        m.currentNav = parseFloat(data.data[0].nav);
+        updated++;
+      }
+    } catch (e) {
+      console.error(`Failed to fetch NAV for ${m.symbol}`, e);
+    }
+  }
+
+  saveToStorage('mf', mfs);
+  renderMap['mf']();
+  btn.innerHTML = '🔄 Refresh NAV';
+  showToast('MF NAV Updated', `${updated} mutual fund NAVs refreshed successfully`, 'success');
+}
+
+async function refreshAllPrices() {
+  const btn = document.getElementById('refreshAllBtn');
+  btn.innerHTML = '<span class="loading"></span> Refreshing...';
+  btn.disabled = true;
+  
+  showToast('Refreshing', 'Updating all prices. This may take a moment...', 'info');
+  
+  await Promise.all([
+    refreshStockPrices(),
+    refreshCryptoPrices(),
+    refreshMFPrices()
+  ]);
+  
+  btn.innerHTML = '🔄 Refresh All';
+  btn.disabled = false;
+  updateDashboard();
+}
+
+// Dashboard Update
+function updateDashboard() {
+  const stocks = loadFromStorage('stocks');
+  const crypto = loadFromStorage('crypto');
+  const mfs = loadFromStorage('mf');
+  const bank = loadFromStorage('bank');
+  const home = loadFromStorage('home');
+
+  let stocksInv = 0, stocksPL = 0, stocksValue = 0;
+  stocks.forEach(s => {
+    const inv = s.qty * s.avgCost;
+    const val = s.qty * (s.currentPrice || 0);
+    stocksInv += inv;
+    stocksValue += val;
+    stocksPL += (val - inv);
+  });
+
+  let cryptoInv = 0, cryptoPL = 0, cryptoValue = 0;
+  crypto.forEach(c => {
+    const inv = c.qty * c.avgCost;
+    const val = c.qty * (c.currentPrice || 0);
+    cryptoInv += inv;
+    cryptoValue += val;
+    cryptoPL += (val - inv);
+  });
+
+  let mfInv = 0, mfPL = 0, mfValue = 0;
+  mfs.forEach(m => {
+    const inv = m.units * m.nav;
+    const val = m.units * (m.currentNav || 0);
+    mfInv += inv;
+    mfValue += val;
+    mfPL += (val - inv);
+  });
+
+  let bankBal = 0;
+  bank.forEach(b => bankBal += b.balance);
+
+  let homeAmt = 0;
+  home.forEach(h => homeAmt += h.amount);
+
+  // NOTE: Home investments are intentionally EXCLUDED from the portfolio total (isolated tracker)
+  const totalValue = stocksValue + cryptoValue + mfValue + bankBal;
+  const totalPL = stocksPL + cryptoPL + mfPL;
+  const totalInv = stocksInv + cryptoInv + mfInv;
+  const totalPLPercent = totalInv > 0 ? (totalPL / totalInv * 100) : 0;
+
+  document.getElementById('totalPortfolioValue').textContent = formatCurrency(totalValue);
+  document.getElementById('totalPortfolioChange').innerHTML = `
+    <span>${totalPL >= 0 ? '↑' : '↓'} ${formatCurrency(Math.abs(totalPL))} (${totalPLPercent.toFixed(2)}%)</span>
+  `;
+  document.getElementById('totalPortfolioChange').className = `quick-stat-change ${totalPL >= 0 ? 'positive' : 'negative'}`;
+
+  document.getElementById('stocksValue').textContent = formatCurrency(stocksValue);
+  document.getElementById('stocksChange').textContent = formatCurrency(stocksPL);
+  document.getElementById('stocksChange').className = `quick-stat-change ${stocksPL >= 0 ? 'positive' : 'negative'}`;
+
+  document.getElementById('cryptoValue').textContent = formatCurrency(cryptoValue);
+  document.getElementById('cryptoChange').textContent = formatCurrency(cryptoPL);
+  document.getElementById('cryptoChange').className = `quick-stat-change ${cryptoPL >= 0 ? 'positive' : 'negative'}`;
+
+  document.getElementById('mfValue').textContent = formatCurrency(mfValue);
+  document.getElementById('mfChange').textContent = formatCurrency(mfPL);
+  document.getElementById('mfChange').className = `quick-stat-change ${mfPL >= 0 ? 'positive' : 'negative'}`;
+
+  document.getElementById('bankValue').textContent = formatCurrency(bankBal);
+  document.getElementById('homeValue').textContent = formatCurrency(homeAmt);
+  
+  document.getElementById('todayPL').textContent = formatCurrency(totalPL);
+  document.getElementById('todayPL').className = totalPL >= 0 ? 'profit' : 'loss';
+  
+  const totalHoldings = stocks.length + crypto.length + mfs.length + bank.length;
+  document.getElementById('totalHoldings').textContent = totalHoldings;
+  
+  const allAssets = [
+    ...stocks.map(s => ({
+      name: s.name,
+      pl: s.currentPrice ? ((s.currentPrice - s.avgCost) / s.avgCost * 100) : 0
+    })),
+    ...crypto.map(c => ({
+      name: c.name,
+      pl: c.currentPrice ? ((c.currentPrice - c.avgCost) / c.avgCost * 100) : 0
+    })),
+    ...mfs.map(m => ({
+      name: m.name,
+      pl: m.currentNav ? ((m.currentNav - m.nav) / m.nav * 100) : 0
+    }))
+  ];
+  
+  if (allAssets.length > 0) {
+    const best = allAssets.reduce((a, b) => a.pl > b.pl ? a : b);
+    const worst = allAssets.reduce((a, b) => a.pl < b.pl ? a : b);
+    
+    document.getElementById('bestPerformer').textContent = best.name;
+    document.getElementById('bestPerformerGain').textContent = `+${best.pl.toFixed(2)}%`;
+    
+    document.getElementById('worstPerformer').textContent = worst.name;
+    document.getElementById('worstPerformerLoss').textContent = `${worst.pl.toFixed(2)}%`;
+  }
+
+  recordNetWorthSnapshot(totalValue);
+  renderMaturityAlerts();
+}
+
+// Overview Charts
+function updateOverview() {
+  const stocks = loadFromStorage('stocks');
+  const crypto = loadFromStorage('crypto');
+  const mfs = loadFromStorage('mf');
+  const bank = loadFromStorage('bank');
+  const home = loadFromStorage('home');
+
+  let stocksValue = 0, cryptoValue = 0, mfValue = 0, bankValue = 0, homeValue = 0;
+  
+  stocks.forEach(s => stocksValue += s.qty * (s.currentPrice || 0));
+  crypto.forEach(c => cryptoValue += c.qty * (c.currentPrice || 0));
+  mfs.forEach(m => mfValue += m.units * (m.currentNav || 0));
+  bank.forEach(b => bankValue += b.balance);
+  home.forEach(h => homeValue += h.amount);
+
+  const data = {
+    labels: ['Stocks', 'Crypto', 'Mutual Funds', 'Bank'],
+    datasets: [{
+      data: [stocksValue, cryptoValue, mfValue, bankValue],
+      backgroundColor: ['#6366f1', '#f59e0b', '#10b981', '#3b82f6']
+    }]
+  };
+
+  if (allocationChartInstance) allocationChartInstance.destroy();
+
+  const ctx = document.getElementById('allocationChart').getContext('2d');
+  allocationChartInstance = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  const allocationList = document.getElementById('allocationList');
+  const total = stocksValue + cryptoValue + mfValue + bankValue;
+  const categories = [
+    { name: 'Stocks', value: stocksValue, color: '#6366f1' },
+    { name: 'Crypto', value: cryptoValue, color: '#f59e0b' },
+    { name: 'Mutual Funds', value: mfValue, color: '#10b981' },
+    { name: 'Bank', value: bankValue, color: '#3b82f6' }
+  ];
+
+  allocationList.innerHTML = categories.map(cat => `
+    <div class="allocation-item">
+      <div class="allocation-color" style="background: ${cat.color}"></div>
+      <div class="allocation-info">
+        <div class="allocation-name">${cat.name}</div>
+        <div class="allocation-value">${formatCurrency(cat.value)}</div>
+      </div>
+      <div class="allocation-percent">
+        ${total > 0 ? ((cat.value / total) * 100).toFixed(1) : 0}%
+      </div>
+    </div>
+  `).join('');
+
+  if (performanceChartInstance) performanceChartInstance.destroy();
+
+  const perfCtx = document.getElementById('performanceChart').getContext('2d');
+  performanceChartInstance = new Chart(perfCtx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Portfolio Value',
+        data: [total * 0.8, total * 0.85, total * 0.9, total * 0.95, total * 0.98, total],
+        borderColor: '#6366f1',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return formatCurrency(value);
+            }
+          }
+        }
+      }
+    }
+  });
+
+  renderMaturityAlerts();
+  updateNetWorthChart();
+}
+
+// Analytics
+function updateAnalytics() {
+  renderReturnsAnalysis();
+  const stocks = loadFromStorage('stocks');
+  const crypto = loadFromStorage('crypto');
+  const mfs = loadFromStorage('mf');
+
+  const allAssets = [
+    ...stocks.map(s => ({
+      name: s.name,
+      category: 'Stocks',
+      invested: s.qty * s.avgCost,
+      currentValue: s.qty * (s.currentPrice || 0),
+      pl: (s.qty * (s.currentPrice || 0)) - (s.qty * s.avgCost),
+      plPercent: s.currentPrice ? ((s.currentPrice - s.avgCost) / s.avgCost * 100) : 0
+    })),
+    ...crypto.map(c => ({
+      name: c.name,
+      category: 'Crypto',
+      invested: c.qty * c.avgCost,
+      currentValue: c.qty * (c.currentPrice || 0),
+      pl: (c.qty * (c.currentPrice || 0)) - (c.qty * c.avgCost),
+      plPercent: c.currentPrice ? ((c.currentPrice - c.avgCost) / c.avgCost * 100) : 0
+    })),
+    ...mfs.map(m => ({
+      name: m.name,
+      category: 'Mutual Funds',
+      invested: m.units * m.nav,
+      currentValue: m.units * (m.currentNav || 0),
+      pl: (m.units * (m.currentNav || 0)) - (m.units * m.nav),
+      plPercent: m.currentNav ? ((m.currentNav - m.nav) / m.nav * 100) : 0
+    }))
+  ];
+
+  const totalInvestment = allAssets.reduce((sum, a) => sum + a.invested, 0);
+  const totalCurrentValue = allAssets.reduce((sum, a) => sum + a.currentValue, 0);
+  const totalReturns = totalCurrentValue - totalInvestment;
+  const totalReturnsPercent = totalInvestment > 0 ? (totalReturns / totalInvestment * 100) : 0;
+
+  document.getElementById('analyticsInvestment').textContent = formatCurrency(totalInvestment);
+  document.getElementById('analyticsCurrentValue').textContent = formatCurrency(totalCurrentValue);
+  document.getElementById('analyticsReturns').textContent = formatCurrency(totalReturns);
+  document.getElementById('analyticsReturns').className = totalReturns >= 0 ? 'profit' : 'loss';
+  document.getElementById('analyticsReturnsPercent').textContent = `${totalReturnsPercent.toFixed(2)}%`;
+  document.getElementById('analyticsDiversity').textContent = allAssets.length;
+
+  const topHoldings = allAssets
+    .sort((a, b) => b.currentValue - a.currentValue)
+    .slice(0, 10);
+
+  document.getElementById('topHoldingsTable').innerHTML = topHoldings.map((asset, i) => `
+    <tr>
+      <td><strong>${i + 1}</strong></td>
+      <td>${asset.name}</td>
+      <td><span class="badge badge-info">${asset.category}</span></td>
+      <td>${formatCurrency(asset.currentValue)}</td>
+      <td class="${asset.pl >= 0 ? 'profit' : 'loss'}">${formatCurrency(asset.pl)}</td>
+      <td class="${asset.pl >= 0 ? 'profit' : 'loss'}"><strong>${asset.plPercent.toFixed(2)}%</strong></td>
+    </tr>
+  `).join('');
+
+  const categoryData = {
+    'Stocks': 0,
+    'Crypto': 0,
+    'Mutual Funds': 0
+  };
+
+  allAssets.forEach(asset => {
+    categoryData[asset.category] += asset.currentValue;
+  });
+
+  if (assetAllocationChartInstance) assetAllocationChartInstance.destroy();
+
+  const ctx = document.getElementById('assetAllocationChart').getContext('2d');
+  assetAllocationChartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(categoryData),
+      datasets: [{
+        data: Object.values(categoryData),
+        backgroundColor: ['#6366f1', '#f59e0b', '#10b981']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+  const profitable = allAssets.filter(a => a.pl >= 0).length;
+  const losing = allAssets.filter(a => a.pl < 0).length;
+
+  if (plDistributionChartInstance) plDistributionChartInstance.destroy();
+
+  const plCtx = document.getElementById('plDistributionChart').getContext('2d');
+  plDistributionChartInstance = new Chart(plCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Profitable', 'Loss Making'],
+      datasets: [{
+        label: 'Number of Assets',
+        data: [profitable, losing],
+        backgroundColor: ['#10b981', '#ef4444']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        }
+      }
+    }
+  });
+}
+
+// Goals Management
+function renderGoals() {
+  const goals = loadFromStorage('goals');
+  const container = document.getElementById('goalsContainer');
+
+  if (goals.length === 0) {
+    container.innerHTML = `
+      <div class="chart-card" style="text-align: center; padding: 60px 24px;">
+        <div style="font-size: 64px; margin-bottom: 20px;">🎯</div>
+        <h3 style="margin-bottom: 12px;">No Financial Goals Yet</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">
+          Start by setting your financial goals to track your progress
+        </p>
+        <button class="btn-primary" onclick="openAddGoalModal()">
+          ➕ Add Your First Goal
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = goals.map((goal, i) => {
+    const progress = (goal.currentAmount / goal.targetAmount) * 100;
+    const remaining = goal.targetAmount - goal.currentAmount;
+    const daysRemaining = goal.targetDate ? Math.ceil((new Date(goal.targetDate) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+
+    return `
+      <div class="goal-card">
+        <div class="goal-header">
+          <div>
+            <div class="goal-title">${goal.goalName}</div>
+            <span class="badge badge-info">${goal.category}</span>
+          </div>
+          <button class="btn-danger btn-small" onclick="deleteGoal(${i})">🗑️</button>
+        </div>
+        <div class="goal-progress">
+          <div style="flex: 1;">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${Math.min(progress, 100)}%"></div>
+            </div>
+          </div>
+          <div class="goal-progress-text">
+            ${progress.toFixed(1)}%
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px;">
+          <div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Current</div>
+            <div style="font-size: 18px; font-weight: 600;">${formatCurrency(goal.currentAmount)}</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Target</div>
+            <div style="font-size: 18px; font-weight: 600;">${formatCurrency(goal.targetAmount)}</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Remaining</div>
+            <div style="font-size: 18px; font-weight: 600; color: var(--warning);">${formatCurrency(remaining)}</div>
+          </div>
+          ${daysRemaining !== null ? `
+          <div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Days Left</div>
+            <div style="font-size: 18px; font-weight: 600;">${daysRemaining > 0 ? daysRemaining : 'Overdue'}</div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (goalsChartInstance) goalsChartInstance.destroy();
+
+  const ctx = document.getElementById('goalsChart').getContext('2d');
+  goalsChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: goals.map(g => g.goalName),
+      datasets: [
+        {
+          label: 'Current Amount',
+          data: goals.map(g => g.currentAmount),
+          backgroundColor: '#10b981'
+        },
+        {
+          label: 'Target Amount',
+          data: goals.map(g => g.targetAmount),
+          backgroundColor: '#6366f1'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return formatCurrency(value);
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+function addGoal(e) {
+  e.preventDefault();
+  const form = e.target;
+  const goal = {
+    goalName: form.goalName.value,
+    targetAmount: parseFloat(form.targetAmount.value),
+    currentAmount: parseFloat(form.currentAmount.value) || 0,
+    targetDate: form.targetDate.value,
+    category: form.category.value,
+    createdDate: new Date().toISOString()
+  };
+
+  const goals = loadFromStorage('goals');
+  goals.push(goal);
+  saveToStorage('goals', goals);
+  
+  closeModal('addGoalModal');
+  form.reset();
+  renderGoals();
+  showToast('Goal Added', 'Your financial goal has been created successfully', 'success');
+}
+
+function deleteGoal(index) {
+  if (!confirm('Are you sure you want to delete this goal?')) return;
+  const goals = loadFromStorage('goals');
+  goals.splice(index, 1);
+  saveToStorage('goals', goals);
+  renderGoals();
+  showToast('Goal Deleted', 'Financial goal removed successfully', 'error');
+}
+
+// Transaction History
+function renderTransactions() {
+  const stocks = loadFromStorage('stocks').map(s => ({ ...s, category: 'stocks', type: 'Stock' }));
+  const crypto = loadFromStorage('crypto').map(c => ({ ...c, category: 'crypto', type: 'Crypto' }));
+  const mfs = loadFromStorage('mf').map(m => ({ ...m, category: 'mf', type: 'Mutual Fund' }));
+  const bank = loadFromStorage('bank').map(b => ({ ...b, category: 'bank', type: 'Bank' }));
+
+  const allTransactions = [...stocks, ...crypto, ...mfs, ...bank]
+    .filter(t => t.addedDate || t.date)
+    .sort((a, b) => new Date(b.addedDate || b.date) - new Date(a.addedDate || a.date));
+
+  const container = document.getElementById('transactionsList');
+
+  if (allTransactions.length === 0) {
+    container.innerHTML = `
+      <div class="chart-card" style="text-align: center; padding: 60px 24px;">
+        <div style="font-size: 64px; margin-bottom: 20px;">📜</div>
+        <h3 style="margin-bottom: 12px;">No Transactions Yet</h3>
+        <p style="color: var(--text-secondary);">
+          Your transaction history will appear here
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = allTransactions.map(t => {
+    const amount = t.balance || t.amount || ((t.qty || t.units) * (t.avgCost || t.nav));
+    return `
+      <div class="transaction-item">
+        <div class="transaction-info">
+          <h4>${t.name}</h4>
+          <p>
+            <span class="badge badge-info">${t.type}</span>
+            ${t.symbol ? `• ${t.symbol}` : ''}
+            • ${formatDate(t.addedDate || t.date)}
+          </p>
+        </div>
+        <div class="transaction-amount">
+          ${formatCurrency(amount)}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterTransactions() {
+  const searchValue = document.getElementById('transactionSearch').value.toLowerCase();
+  const category = document.getElementById('transactionCategoryFilter').value;
+  
+  const items = document.querySelectorAll('.transaction-item');
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    const matchesSearch = text.includes(searchValue);
+    const badge = item.querySelector('.badge-info').textContent.toLowerCase();
+    const matchesCategory = !category || badge.includes(category);
+    
+    item.style.display = matchesSearch && matchesCategory ? '' : 'none';
+  });
+}
+
+// Export Functions
+function exportToCSV() {
+  const stocks = loadFromStorage('stocks');
+  const crypto = loadFromStorage('crypto');
+  const mfs = loadFromStorage('mf');
+
+  let csv = 'Category,Name,Symbol,Quantity,Avg Cost,Current Price,Invested,Current Value,P/L,Date\n';
+
+  stocks.forEach(s => {
+    const invested = s.qty * s.avgCost;
+    const currentValue = s.qty * (s.currentPrice || 0);
+    const pl = currentValue - invested;
+    csv += `Stock,${s.name},${s.symbol},${s.qty},${s.avgCost},${s.currentPrice || 0},${invested},${currentValue},${pl},${s.date || ''}\n`;
+  });
+
+  crypto.forEach(c => {
+    const invested = c.qty * c.avgCost;
+    const currentValue = c.qty * (c.currentPrice || 0);
+    const pl = currentValue - invested;
+    csv += `Crypto,${c.name},${c.symbol},${c.qty},${c.avgCost},${c.currentPrice || 0},${invested},${currentValue},${pl},${c.date || ''}\n`;
+  });
+
+  mfs.forEach(m => {
+    const invested = m.units * m.nav;
+    const currentValue = m.units * (m.currentNav || 0);
+    const pl = currentValue - invested;
+    csv += `Mutual Fund,${m.name},${m.symbol},${m.units},${m.nav},${m.currentNav || 0},${invested},${currentValue},${pl},${m.date || ''}\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `portfolio-export-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('Export Complete', 'Portfolio data exported to CSV successfully', 'success');
+}
+
+function exportSectionToCSV(section) {
+  const data = loadFromStorage(section);
+  if (data.length === 0) {
+    showToast('No Data', 'Nothing to export in this section', 'warning');
+    return;
+  }
+
+  let csv = Object.keys(data[0]).join(',') + '\n';
+  data.forEach(row => {
+    csv += Object.values(row).join(',') + '\n';
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${section}-export-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('Export Complete', `${section} data exported successfully`, 'success');
+}
+
+function printPortfolio() {
+  window.print();
+}
+
+// Modal Functions
+function openModal(modalId) {
+  document.getElementById(modalId).classList.add('active');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+}
+
+function openSettings() {
+  openModal('settingsModal');
+}
+
+function openAddGoalModal() {
+  openModal('addGoalModal');
+}
+
+// Settings Functions
+function clearAllData() {
+  if (!confirm('Are you sure you want to delete ALL data? This cannot be undone!')) return;
+  if (!confirm('This will permanently delete all your portfolio data. Are you absolutely sure?')) return;
+  
+  ['stocks', 'crypto', 'mf', 'bank', 'home', 'goals'].forEach(key => {
+    localStorage.removeItem(key);
+  });
+  
+  Object.values(renderMap).forEach(fn => fn());
+  updateDashboard();
+  closeModal('settingsModal');
+  showToast('Data Cleared', 'All portfolio data has been deleted', 'error');
+}
+
+function resetToDemo() {
+  if (!confirm('Load demo data? This will replace your current data.')) return;
+  
+  const demoData = {
+    stocks: [
+      { name: 'Reliance Industries', symbol: 'RELIANCE', qty: 10, avgCost: 2400, currentPrice: 2550, date: '2024-01-15', addedDate: new Date().toISOString() },
+      { name: 'TCS', symbol: 'TCS', qty: 5, avgCost: 3500, currentPrice: 3650, date: '2024-02-10', addedDate: new Date().toISOString() }
+    ],
+    crypto: [
+      { name: 'Bitcoin', symbol: 'bitcoin', qty: 0.05, avgCost: 3500000, currentPrice: 3800000, date: '2024-01-20', addedDate: new Date().toISOString() }
+    ],
+    mf: [
+      { name: 'SBI Bluechip Fund', symbol: '119598', units: 100, nav: 55, currentNav: 58, date: '2024-01-10', addedDate: new Date().toISOString() }
+    ],
+    bank: [
+      { bankName: 'HDFC Bank', accountType: 'FD', accountHolder: 'John Doe', balance: 100000, rate: 6.5, days: 365, depositDate: '2024-01-01', compoundingFrequency: 4, branch: 'Main Branch', nominee: 'Jane Doe' }
+    ],
+    home: [
+      { name: 'Emergency Fund', account: 'Savings', amount: 50000, date: '2024-01-05' }
+    ],
+    goals: [
+      { goalName: 'Retirement Fund', targetAmount: 5000000, currentAmount: 1200000, targetDate: '2045-12-31', category: 'retirement', createdDate: new Date().toISOString() }
+    ]
+  };
+
+  Object.keys(demoData).forEach(key => {
+    saveToStorage(key, demoData[key]);
+  });
+
+  Object.values(renderMap).forEach(fn => fn());
+  updateDashboard();
+  closeModal('settingsModal');
+  showToast('Demo Data Loaded', 'Sample portfolio data has been loaded', 'success');
+}
+
+// ================= COMPOUND INTEREST CALCULATOR ================= //
+
+function toggleCalculatorMode(mode) {
+  calculatorMode = mode;
+  
+  document.querySelectorAll('.toggle-option').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  if (mode === 'lumpsum') {
+    document.getElementById('lumpsumInputs').style.display = 'block';
+    document.getElementById('sipInputs').style.display = 'none';
+    document.getElementById('sipContributionHeader').style.display = 'none';
+  } else {
+    document.getElementById('lumpsumInputs').style.display = 'none';
+    document.getElementById('sipInputs').style.display = 'block';
+    document.getElementById('sipContributionHeader').style.display = 'table-cell';
+  }
+  
+  calculateCompound();
+}
+
+function calculateCompound() {
+  const principal = calculatorMode === 'lumpsum' 
+    ? parseFloat(document.getElementById('principal').value) || 0
+    : 0;
+  const sipAmount = calculatorMode === 'sip' 
+    ? parseFloat(document.getElementById('sipAmount').value) || 0
+    : 0;
+  const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+  const frequency = parseInt(document.getElementById('compoundFrequency').value) || 12;
+
+  const periods = [3, 5, 10, 20];
+  const resultsContainer = document.getElementById('calculatorResults');
+  
+  resultsContainer.innerHTML = periods.map(years => {
+    let futureValue, totalInvested, totalGain;
+    
+    if (calculatorMode === 'lumpsum') {
+      const r = rate / 100;
+      const n = frequency;
+      const t = years;
+      
+      futureValue = principal * Math.pow((1 + r/n), n * t);
+      totalInvested = principal;
+      totalGain = futureValue - totalInvested;
+    } else {
+      const monthlyRate = (rate / 100) / 12;
+      const months = years * 12;
+      
+      if (monthlyRate === 0) {
+        futureValue = sipAmount * months;
+      } else {
+        futureValue = sipAmount * (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate * (1 + monthlyRate);
+      }
+      
+      totalInvested = sipAmount * months;
+      totalGain = futureValue - totalInvested;
+    }
+    
+    const multiplier = totalInvested > 0 ? (futureValue / totalInvested).toFixed(2) : 0;
+    
+    return `
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-period">${years} Years</div>
+          <div class="result-multiplier">${multiplier}x</div>
+        </div>
+        <div class="result-values">
+          <div class="result-value-item">
+            <div class="result-label">Invested</div>
+            <div class="result-amount">${formatCurrency(totalInvested)}</div>
+          </div>
+          <div class="result-value-item">
+            <div class="result-label">Final Value</div>
+            <div class="result-amount profit">${formatCurrency(futureValue)}</div>
+          </div>
+        </div>
+        <div class="result-gain profit" style="text-align: center; margin-top: 12px;">
+          ↑ ${formatCurrency(totalGain)} Gain
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  updateBreakdownTable(principal, sipAmount, rate, frequency);
+  updateCompoundChart(principal, sipAmount, rate, frequency);
+}
+
+function updateBreakdownTable(principal, sipAmount, rate, frequency) {
+  const tbody = document.getElementById('breakdownTableBody');
+  const years = 20;
+  let rows = '';
+  
+  let balance = principal;
+  const monthlyRate = (rate / 100) / 12;
+  const periodRate = rate / 100 / frequency;
+  
+  for (let year = 1; year <= years; year++) {
+    let openingBalance = balance;
+    let interestEarned, sipContribution = 0;
+    
+    if (calculatorMode === 'lumpsum') {
+      const n = frequency;
+      interestEarned = balance * (Math.pow(1 + periodRate, n) - 1);
+      balance += interestEarned;
+    } else {
+      interestEarned = 0;
+      sipContribution = sipAmount * 12;
+      
+      for (let month = 1; month <= 12; month++) {
+        balance = balance * (1 + monthlyRate) + sipAmount;
+      }
+      
+      interestEarned = balance - openingBalance - sipContribution;
+    }
+    
+    rows += `
+      <tr>
+        <td><strong>Year ${year}</strong></td>
+        <td>${formatCurrency(openingBalance)}</td>
+        <td class="profit">${formatCurrency(interestEarned)}</td>
+        ${calculatorMode === 'sip' ? `<td>${formatCurrency(sipContribution)}</td>` : ''}
+        <td><strong>${formatCurrency(balance)}</strong></td>
+      </tr>
+    `;
+  }
+  
+  tbody.innerHTML = rows;
+}
+
+function updateCompoundChart(principal, sipAmount, rate, frequency) {
+  const years = 20;
+  const labels = [];
+  const investedData = [];
+  const valueData = [];
+  
+  let balance = principal;
+  let totalInvested = principal;
+  const monthlyRate = (rate / 100) / 12;
+  const periodRate = rate / 100 / frequency;
+  
+  for (let year = 0; year <= years; year++) {
+    labels.push(`Year ${year}`);
+    
+    if (calculatorMode === 'lumpsum') {
+      investedData.push(totalInvested);
+      valueData.push(balance);
+      
+      if (year < years) {
+        const n = frequency;
+        balance = balance * Math.pow(1 + periodRate, n);
+      }
+    } else {
+      investedData.push(totalInvested);
+      valueData.push(balance);
+      
+      if (year < years) {
+        for (let month = 1; month <= 12; month++) {
+          balance = balance * (1 + monthlyRate) + sipAmount;
+        }
+        totalInvested += sipAmount * 12;
+      }
+    }
+  }
+  
+  if (compoundChartInstance) {
+    compoundChartInstance.destroy();
+  }
+  
+  const ctx = document.getElementById('compoundChart').getContext('2d');
+  compoundChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Invested Amount',
+          data: investedData,
+          borderColor: '#6366f1',
+          backgroundColor: 'rgba(99, 102, 241, 0.1)',
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: 'Future Value',
+          data: valueData,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          fill: true,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return formatCurrency(value);
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ================= THEME TOGGLE ================= //
+function applyTheme(theme) {
+  if (theme === 'light') document.body.classList.add('light');
+  else document.body.classList.remove('light');
+  const btn = document.getElementById('themeToggleBtn');
+  if (btn) btn.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+function toggleTheme() {
+  const next = document.body.classList.contains('light') ? 'dark' : 'light';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+  // re-render charts so colours/axes pick up new theme context if needed
+  updateOverview();
+}
+
+// ================= NET WORTH OVER TIME ================= //
+let netWorthChartInstance = null;
+function recordNetWorthSnapshot(value) {
+  let history = [];
+  try { history = JSON.parse(localStorage.getItem('netWorthHistory') || '[]'); } catch (e) { history = []; }
+  if (!Array.isArray(history)) history = [];
+  const today = new Date().toISOString().slice(0, 10);
+  const last = history[history.length - 1];
+  if (last && last.date === today) { last.value = value; }
+  else history.push({ date: today, value: value });
+  if (history.length > 365) history = history.slice(-365);
+  localStorage.setItem('netWorthHistory', JSON.stringify(history));
+}
+function clearNetWorthHistory() {
+  localStorage.removeItem('netWorthHistory');
+  updateNetWorthChart();
+  showToast('Cleared', 'Net worth history cleared', 'success');
+}
+function updateNetWorthChart() {
+  const ctx = document.getElementById('netWorthChart');
+  if (!ctx) return;
+  let history = [];
+  try { history = JSON.parse(localStorage.getItem('netWorthHistory') || '[]'); } catch (e) {}
+  if (netWorthChartInstance) netWorthChartInstance.destroy();
+  netWorthChartInstance = new Chart(ctx.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: history.map(h => h.date),
+      datasets: [{
+        label: 'Net Worth',
+        data: history.map(h => h.value),
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.1)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => formatCurrency(c.parsed.y) } } },
+      scales: { y: { beginAtZero: true, ticks: { callback: v => formatCurrency(v) } } }
+    }
+  });
+}
+
+// ================= MATURITY ALERTS ================= //
+function renderMaturityAlerts() {
+  const container = document.getElementById('maturityAlerts');
+  if (!container) return;
+  const data = loadFromStorage('bank');
+  const today = new Date();
+  const soon = [], matured = [];
+  data.forEach(r => {
+    const depositRaw = normalizeDateString(r.depositDate || r.date || '');
+    const depositDate = depositRaw ? new Date(depositRaw) : null;
+    let maturityDate = r.maturityDate ? new Date(normalizeDateString(r.maturityDate)) : null;
+    if (!maturityDate && depositDate && r.days) maturityDate = new Date(calculateMaturityDate(depositRaw, r.days));
+    if (!maturityDate) return;
+    const daysRemaining = Math.ceil((maturityDate - today) / (1000 * 60 * 60 * 24));
+    const item = { bankName: r.bankName, accountType: r.accountType || 'Savings', maturityDate, daysRemaining, balance: r.balance || 0 };
+    if (daysRemaining <= 0) matured.push(item);
+    else if (daysRemaining <= 30) soon.push(item);
+  });
+  const all = [...matured, ...soon];
+  const badge = document.getElementById('maturityAlertsCount');
+  if (badge) badge.textContent = all.length;
+  if (!all.length) { container.innerHTML = '<div class="alert-empty">✅ No deposits maturing in the next 30 days.</div>'; return; }
+  container.innerHTML = all.map(a => {
+    const cls = a.daysRemaining <= 0 ? 'matured' : '';
+    const label = a.daysRemaining <= 0 ? 'Matured' : a.daysRemaining + ' days left';
+    const badgeStyle = a.daysRemaining <= 0 ? 'background:var(--danger);' : '';
+    return `<div class="alert-item ${cls}">
+      <div class="alert-item-info">
+        <span class="alert-item-name">${a.bankName} • ${a.accountType}</span>
+        <span class="alert-item-meta">Matures ${a.maturityDate.toLocaleDateString('en-IN')} • ${formatCurrency(a.balance)}</span>
+      </div>
+      <span class="alert-count-badge" style="${badgeStyle}">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+// ================= TAX / CAPITAL GAINS CALCULATOR ================= //
+function renderTaxCalculator() {
+  const body = document.getElementById('taxTableBody');
+  if (!body) return;
+  body.innerHTML = '';
+  const today = new Date();
+  const EQUITY_LTCG_EXEMPTION = 125000;
+  let rows = [];
+  let stcgGain = 0, ltcgGain = 0, totalInvested = 0, totalValue = 0, totalGain = 0, totalTax = 0;
+
+  const addHolding = (name, category, qty, avgCost, currentPrice, date, isCrypto) => {
+    if (!qty || !avgCost) return;
+    const invested = qty * avgCost;
+    const currValue = qty * (currentPrice || 0);
+    const gain = currValue - invested;
+    totalInvested += invested; totalValue += currValue; totalGain += gain;
+    const purchaseDate = date ? new Date(normalizeDateString(date)) : null;
+    const holdingDays = purchaseDate ? Math.floor((today - purchaseDate) / (1000 * 60 * 60 * 24)) : 0;
+    let periodLabel, type, tax;
+    if (gain <= 0) {
+      type = 'Loss'; tax = 0; periodLabel = holdingDays + ' days';
+      rows.push({ name, category, invested, currValue, gain, period: periodLabel, type, tax });
+      return;
+    }
+    if (isCrypto) {
+      type = 'Crypto 30%'; tax = gain * 0.30; stcgGain += gain;
+      periodLabel = holdingDays + ' days (' + (holdingDays / 365).toFixed(1) + 'y)';
+    } else {
+      const isLong = holdingDays >= 365;
+      if (isLong) { type = 'LTCG 12.5%'; tax = gain * 0.125; ltcgGain += gain; }
+      else { type = 'STCG 20%'; tax = gain * 0.20; stcgGain += gain; }
+      periodLabel = holdingDays + ' days (' + (holdingDays / 365).toFixed(1) + 'y)';
+    }
+    totalTax += tax;
+    rows.push({ name, category, invested, currValue, gain, period: periodLabel, type, tax });
+  };
+
+  loadFromStorage('stocks').forEach(s => addHolding(s.name, 'Stock', s.qty, s.avgCost, s.currentPrice, s.date, false));
+  loadFromStorage('mf').forEach(m => addHolding(m.name, 'Mutual Fund', m.units, m.nav, m.currentNav, m.date, false));
+  loadFromStorage('crypto').forEach(c => addHolding(c.name, 'Crypto', c.qty, c.avgCost, c.currentPrice, c.date, true));
+
+  // Apply pooled LTCG exemption to equity holdings (stocks + MFs)
+  const exemptionBenefit = Math.min(ltcgGain, EQUITY_LTCG_EXEMPTION) * 0.125;
+  totalTax -= exemptionBenefit;
+
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    const gainClass = r.gain >= 0 ? 'profit' : 'loss';
+    tr.innerHTML = `<td><strong>${r.name}</strong></td><td>${r.category}</td><td>${formatCurrency(r.invested)}</td><td>${formatCurrency(r.currValue)}</td><td class="${gainClass}">${formatCurrency(r.gain)}</td><td>${r.period}</td><td>${r.type}</td><td>${formatCurrency(r.tax)}</td>`;
+    body.appendChild(tr);
+  });
+
+  document.getElementById('taxSTCG').textContent = formatCurrency(stcgGain);
+  document.getElementById('taxLTCG').textContent = formatCurrency(ltcgGain);
+  document.getElementById('taxTotalGain').textContent = formatCurrency(Math.max(0, totalGain - EQUITY_LTCG_EXEMPTION));
+  document.getElementById('taxTotalTax').textContent = formatCurrency(Math.max(0, totalTax));
+  document.getElementById('taxTotalRows').textContent = rows.length + ' holdings';
+  document.getElementById('taxFootInvested').textContent = formatCurrency(totalInvested);
+  document.getElementById('taxFootValue').textContent = formatCurrency(totalValue);
+  document.getElementById('taxFootGain').textContent = formatCurrency(totalGain);
+  document.getElementById('taxFootTax').textContent = formatCurrency(Math.max(0, totalTax));
+}
+
+// ================= FUTURE PROJECTION ================= //
+let projectionChartInstance = null;
+function currentPortfolioTotal() {
+  let v = 0;
+  loadFromStorage('stocks').forEach(s => v += s.qty * (s.currentPrice || 0));
+  loadFromStorage('crypto').forEach(c => v += c.qty * (c.currentPrice || 0));
+  loadFromStorage('mf').forEach(m => v += m.units * (m.currentNav || 0));
+  loadFromStorage('bank').forEach(b => v += b.balance || 0);
+  return v;
+}
+function syncProjectionBase() {
+  document.getElementById('projPrincipal').value = Math.round(currentPortfolioTotal());
+  renderProjection();
+  showToast('Synced', 'Current portfolio value loaded', 'success');
+}
+function renderProjection() {
+  const principal = parseFloat(document.getElementById('projPrincipal').value) || 0;
+  const rate = (parseFloat(document.getElementById('projRate').value) || 0) / 100;
+  const sip = parseFloat(document.getElementById('projSip').value) || 0;
+  const years = [5, 10, 20, 30];
+  const results = document.getElementById('projectionResults');
+
+  const fvAt = (y) => {
+    const months = y * 12;
+    const r = rate / 12;
+    const fvPrincipal = principal * Math.pow(1 + rate, y);
+    const fvSip = r > 0 ? sip * ((Math.pow(1 + r, months) - 1) / r) * (1 + r) : sip * months;
+    return fvPrincipal + fvSip;
+  };
+
+  results.innerHTML = years.map(y => {
+    const fv = fvAt(y);
+    const invested = principal + sip * (y * 12);
+    const gain = fv - invested;
+    const mult = invested > 0 ? (fv / invested) : 0;
+    return `<div class="result-card">
+      <div class="result-card-header"><span class="result-period">${y} Years</span><span class="result-multiplier">${mult.toFixed(2)}x</span></div>
+      <div class="result-values">
+        <div class="result-value-item"><div class="result-label">Projected Value</div><div class="result-amount">${formatCurrency(fv)}</div></div>
+        <div class="result-value-item"><div class="result-label">Total Invested</div><div class="result-amount">${formatCurrency(invested)}</div></div>
+      </div>
+      <div class="result-gain ${gain >= 0 ? 'profit' : 'loss'}">${gain >= 0 ? '▲' : '▼'} ${formatCurrency(Math.abs(gain))} gain</div>
+    </div>`;
+  }).join('');
+
+  const ctx = document.getElementById('projectionChart');
+  if (projectionChartInstance) projectionChartInstance.destroy();
+  const labels = [], valueSeries = [], investedSeries = [];
+  for (let y = 0; y <= 30; y++) {
+    labels.push('Y' + y);
+    valueSeries.push(fvAt(y));
+    investedSeries.push(principal + sip * (y * 12));
+  }
+  projectionChartInstance = new Chart(ctx.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Projected Value', data: valueSeries, borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.1)', fill: true, tension: 0.3 },
+        { label: 'Invested', data: investedSeries, borderColor: '#10b981', borderDash: [5, 5], fill: false, tension: 0.3 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: true }, tooltip: { callbacks: { label: c => c.dataset.label + ': ' + formatCurrency(c.parsed.y) } } },
+      scales: { y: { beginAtZero: true, ticks: { callback: v => formatCurrency(v) } } }
+    }
+  });
+}
+
+// Initialize
+applyTheme(localStorage.getItem('theme') || 'dark');
+updateDashboard();
+updateOverview();
+calculateCompound();
+renderMaturityAlerts();
+renderTaxCalculator();
+const _projPrincipalEl = document.getElementById('projPrincipal');
+if (_projPrincipalEl) { _projPrincipalEl.value = Math.round(currentPortfolioTotal()); renderProjection(); }
+
+const lastModified = localStorage.getItem('lastModified');
+if (lastModified) {
+  document.getElementById('lastUpdated').textContent = formatDate(new Date(lastModified));
+} else {
+  document.getElementById('lastUpdated').textContent = 'Never';
+}
+
+const autoRefreshInterval = parseInt(localStorage.getItem('autoRefresh') || '0');
+if (autoRefreshInterval > 0) {
+  setInterval(() => {
+    refreshAllPrices();
+  }, autoRefreshInterval);
+}
+
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+});
+
+// ================= XIRR / ANNUALISED RETURNS ================= //
+function xirr(flows) {
+  // flows: [{ when: Date, amount: number }]  (negatives = invested, positives = value)
+  if (flows.length < 2) return null;
+  const t0 = flows[0].when.getTime();
+  const yearsFrom = f => (f.when.getTime() - t0) / (365 * 24 * 3600 * 1000);
+  const npv = rate => flows.reduce((s, f) => s + f.amount / Math.pow(1 + rate, yearsFrom(f)), 0);
+
+  let lo = -0.9999, hi = 10;
+  let fLo = npv(lo), fHi = npv(hi);
+  if (isNaN(fLo) || isNaN(fHi) || fLo * fHi > 0) return null;
+  for (let i = 0; i < 200; i++) {
+    const mid = (lo + hi) / 2;
+    const fMid = npv(mid);
+    if (Math.abs(fMid) < 1e-7) return mid;
+    if (fLo * fMid < 0) { hi = mid; fHi = fMid; } else { lo = mid; fLo = fMid; }
+  }
+  return (lo + hi) / 2;
+}
+
+function holdingPeriodYears(dateStr) {
+  if (!dateStr) return 0;
+  const d = new Date(dateStr);
+  if (isNaN(d)) return 0;
+  return Math.max(0, (Date.now() - d.getTime()) / (365 * 24 * 3600 * 1000));
+}
+
+function formatHeld(years) {
+  if (!years) return '—';
+  const months = Math.round(years * 12);
+  if (months < 12) return months + 'm';
+  return Math.floor(months / 12) + 'y ' + (months % 12) + 'm';
+}
+
+function renderReturnsAnalysis() {
+  const table = document.getElementById('xirrTable');
+  if (!table) return;
+  const body = table.querySelector('tbody');
+  const rows = [
+    ...loadFromStorage('stocks').map(s => ({ name: s.name, type: 'Stock', invested: (s.qty || 0) * (s.avgCost || 0), current: (s.qty || 0) * (s.currentPrice || 0), date: s.date })),
+    ...loadFromStorage('crypto').map(c => ({ name: c.name, type: 'Crypto', invested: (c.qty || 0) * (c.avgCost || 0), current: (c.qty || 0) * (c.currentPrice || 0), date: c.date })),
+    ...loadFromStorage('mf').map(m => ({ name: m.name, type: 'Mutual Fund', invested: (m.units || 0) * (m.nav || 0), current: (m.units || 0) * (m.currentNav || 0), date: m.date }))
+  ].filter(r => r.invested > 0);
+
+  body.innerHTML = '';
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="7" style="text-align:center; color: var(--text-secondary);">Add holdings with a purchase date to see annualised returns</td></tr>';
+    document.getElementById('portfolioXirr').textContent = 'Portfolio XIRR: —';
+    return;
+  }
+
+  rows.forEach(r => {
+    const years = holdingPeriodYears(r.date);
+    const abs = r.invested ? ((r.current - r.invested) / r.invested) * 100 : 0;
+    let cagr = null;
+    if (years > 0.02 && r.invested > 0 && r.current > 0) {
+      cagr = (Math.pow(r.current / r.invested, 1 / years) - 1) * 100;
+    }
+    const cls = v => (v >= 0 ? 'profit' : 'loss');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${r.name}</strong></td>
+      <td><span class="badge badge-info">${r.type}</span></td>
+      <td>${formatCurrency(r.invested)}</td>
+      <td>${formatCurrency(r.current)}</td>
+      <td>${formatHeld(years)}</td>
+      <td class="${cls(abs)}">${abs.toFixed(2)}%</td>
+      <td class="${cagr === null ? '' : cls(cagr)}">${cagr === null ? '—' : cagr.toFixed(2) + '%'}</td>
+    `;
+    body.appendChild(tr);
+  });
+
+  const flows = rows
+    .filter(r => r.date && !isNaN(new Date(r.date)))
+    .map(r => ({ when: new Date(r.date), amount: -r.invested }))
+    .sort((a, b) => a.when - b.when);
+  const totalCurrent = rows.reduce((s, r) => s + r.current, 0);
+  let label = 'Portfolio XIRR: —';
+  if (flows.length && totalCurrent > 0) {
+    flows.push({ when: new Date(), amount: totalCurrent });
+    const rate = xirr(flows);
+    if (rate !== null && isFinite(rate)) label = 'Portfolio XIRR: ' + (rate * 100).toFixed(2) + '% p.a.';
+  }
+  document.getElementById('portfolioXirr').textContent = label;
+}
+
+// ================= LOAN AMORTISATION & PREPAYMENT ================= //
+function buildAmortisation(principal, annualRate, emi, startDate, extraMonthly) {
+  const r = (annualRate || 0) / 1200;
+  const extra = extraMonthly || 0;
+  const start = startDate && !isNaN(new Date(startDate)) ? new Date(startDate) : new Date();
+  let balance = principal;
+  let totalInterest = 0;
+  const schedule = [];
+  const pay = emi + extra;
+  if (pay <= balance * r) return { schedule: [], totalInterest: 0, months: 0, impossible: true };
+  for (let i = 1; i <= 600 && balance > 0.5; i++) {
+    const interest = balance * r;
+    let principalPart = pay - interest;
+    if (principalPart > balance) principalPart = balance;
+    balance = balance - principalPart;
+    totalInterest += interest;
+    const when = new Date(start.getFullYear(), start.getMonth() + i, Math.min(start.getDate(), 28));
+    schedule.push({ n: i, when, interest, principal: principalPart, balance });
+  }
+  return { schedule, totalInterest, months: schedule.length, impossible: false };
+}
+
+function openLoanSchedule(index) {
+  const loan = loadFromStorage('loan')[index];
+  if (!loan) return;
+  const existing = document.getElementById('loanScheduleModal');
+  if (existing) existing.remove();
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+    <div class="modal active" id="loanScheduleModal">
+      <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+          <h3>📅 ${loan.name} — Amortisation Schedule</h3>
+          <button class="modal-close" onclick="closeLoanSchedule()">×</button>
+        </div>
+        <div class="form-group" style="max-width: 260px; margin-bottom: 16px;">
+          <label>Extra monthly prepayment (₹)</label>
+          <input type="number" id="loanPrepayInput" value="0" min="0" step="500" oninput="renderLoanSchedule(${index})">
+        </div>
+        <div id="loanScheduleBody"></div>
+      </div>
+    </div>`;
+  document.body.appendChild(wrap.firstElementChild);
+  renderLoanSchedule(index);
+}
+
+function closeLoanSchedule() {
+  const m = document.getElementById('loanScheduleModal');
+  if (m) m.remove();
+}
+
+function renderLoanSchedule(index) {
+  const loan = loadFromStorage('loan')[index];
+  const target = document.getElementById('loanScheduleBody');
+  if (!loan || !target) return;
+  const principal = parseFloat(loan.amount) || 0;
+  const rate = parseFloat(loan.rate) || 0;
+  const emi = parseFloat(loan.emi) || 0;
+  const extra = parseFloat((document.getElementById('loanPrepayInput') || {}).value) || 0;
+
+  if (!rate || !emi || !principal) {
+    target.innerHTML = '<p style="color: var(--text-secondary);">Add loan amount, EMI and interest rate to generate a schedule.</p>';
+    return;
+  }
+
+  const base = buildAmortisation(principal, rate, emi, loan.loanDate, 0);
+  const withExtra = buildAmortisation(principal, rate, emi, loan.loanDate, extra);
+
+  if (base.impossible) {
+    target.innerHTML = '<p class="loss">The EMI is lower than the monthly interest — this loan never amortises. Check the EMI or rate.</p>';
+    return;
+  }
+
+  const monthsSaved = base.months - withExtra.months;
+  const interestSaved = base.totalInterest - withExtra.totalInterest;
+
+  const rowsHtml = withExtra.schedule.map(s => `
+    <tr>
+      <td>${s.n}</td>
+      <td>${s.when.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}</td>
+      <td>${formatCurrency(s.principal)}</td>
+      <td>${formatCurrency(s.interest)}</td>
+      <td>${formatCurrency(s.balance)}</td>
+    </tr>`).join('');
+
+  target.innerHTML = `
+    <div class="stats-grid" style="margin-bottom: 16px;">
+      <div class="stat-card"><div class="stat-card-header"><div><p style="color: var(--text-secondary); font-size: 12px;">Total Interest</p><h4>${formatCurrency(withExtra.totalInterest)}</h4></div></div><div class="stat-card-footer">Over ${withExtra.months} months</div></div>
+      <div class="stat-card"><div class="stat-card-header"><div><p style="color: var(--text-secondary); font-size: 12px;">Total Payable</p><h4>${formatCurrency(principal + withExtra.totalInterest)}</h4></div></div><div class="stat-card-footer">Principal + interest</div></div>
+      <div class="stat-card"><div class="stat-card-header"><div><p style="color: var(--text-secondary); font-size: 12px;">Interest Saved</p><h4 class="${interestSaved > 0 ? 'profit' : ''}">${formatCurrency(interestSaved)}</h4></div></div><div class="stat-card-footer">${monthsSaved > 0 ? monthsSaved + ' months earlier payoff' : 'Add a prepayment to see savings'}</div></div>
+      <div class="stat-card"><div class="stat-card-header"><div><p style="color: var(--text-secondary); font-size: 12px;">Payoff Date</p><h4>${withExtra.schedule.length ? withExtra.schedule[withExtra.schedule.length - 1].when.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '—'}</h4></div></div><div class="stat-card-footer">Estimated</div></div>
+    </div>
+    <div class="table-container" style="max-height: 380px;">
+      <table>
+        <thead><tr><th>#</th><th>Month</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>`;
+  applyMobileLabels();
+}
+
+// ================= MOBILE CARD LABELS ================= //
+function applyMobileLabels() {
+  document.querySelectorAll('.table-container table').forEach(table => {
+    const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    if (!headers.length) return;
+    table.querySelectorAll('tbody tr').forEach(tr => {
+      Array.from(tr.children).forEach((td, i) => {
+        if (headers[i]) td.setAttribute('data-label', headers[i]);
+      });
+    });
+  });
+}
+
+(function watchTablesForMobileLabels() {
+  let pending = null;
+  const observer = new MutationObserver(() => {
+    if (pending) return;
+    pending = setTimeout(() => { pending = null; applyMobileLabels(); }, 60);
+  });
+  document.querySelectorAll('.table-container table tbody').forEach(tbody => {
+    observer.observe(tbody, { childList: true });
+  });
+  applyMobileLabels();
+})();
+
+console.log('🚀 Portfolio Manager Pro v2.4 - Backup/Restore, XIRR, Loan Schedule, Mobile Cards');
+
+</script>
+
+</body>
+</html>
