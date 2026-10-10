@@ -1,96 +1,229 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Links & Trackers</title>
+    <title>Tracker Dashboard - Dark Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkbg: '#0B0F19',
+                        cardbg: '#151C2C',
+                        bordercolor: '#26334D',
+                        accentNeon: '#38BDF8',
+                        accentPurple: '#A855F7',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Modern reset and styling */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #333;
+            background-color: #0B0F19;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
         }
 
-        .container {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
+        .glass-card {
+            background: rgba(21, 28, 44, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
 
-        h1 {
-            margin-bottom: 24px;
-            color: #1a202c;
-            font-size: 24px;
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.15);
         }
 
-        .link-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 16px 20px;
-            margin-bottom: 16px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            text-align: left;
+        .neon-link-portfolio {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(59, 130, 246, 0.25));
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38BDF8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .link-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
-            border-color: #cbd5e1;
+        .neon-link-portfolio:hover {
+            background: linear-gradient(135deg, #38BDF8, #3B82F6);
+            color: #FFFFFF;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+            transform: translateY(-2px) scale(1.03);
         }
 
-        p {
-            font-size: 16px;
-            color: #475569;
-            line-height: 1.5;
+        .neon-link-loan {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.25));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #C084FC;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Enhanced Clickable Links */
-        a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: background-color 0.2s, color 0.2s;
+        .neon-link-loan:hover {
+            background: linear-gradient(135deg, #A855F7, #EC4899);
+            color: #FFFFFF;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+            transform: translateY(-2px) scale(1.03);
         }
 
-        a:hover {
-            background-color: #eff6ff;
-            color: #1d4ed8;
-            text-decoration: underline;
+        /* Toast notification styling */
+        .toast {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+        }
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body>
+<body class="font-sans text-slate-200 min-h-screen flex flex-col justify-center items-center p-4 sm:p-6">
 
-    <div class="container">
-        <h1>Quick Trackers</h1>
-        
-        <div class="link-card">
-            <p>Check out our <a href="https://maravinth10.github.io/portfolio" target="_blank" rel="noopener noreferrer">Portfolio</a> to track</p>
+    <div class="w-full max-w-xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center p-2 px-4 mb-3 rounded-full bg-slate-800/80 border border-slate-700/60 text-xs font-semibold uppercase tracking-wider text-sky-400 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-sky-400 mr-2 animate-pulse"></span> Tracker Dashboard
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Quick Access Links
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base mt-2">
+                Manage and track your active assets and loan progress in real time.
+            </p>
         </div>
 
-        <div class="link-card">
-            <p>Check out our <a href="https://maravinth10.github.io/loan" target="_blank" rel="noopener noreferrer">Loan</a> track</p>
+        <!-- Cards List -->
+        <div class="space-y-4">
+            
+            <!-- Portfolio Tracker Card -->
+            <div class="glass-card rounded-2xl p-5 sm:p-6 transition-all duration-300 relative group">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 mt-0.5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-slate-200 text-base sm:text-lg font-medium leading-relaxed">
+                                Check out our Portfolio 
+                                <a href="https://maravinth10.github.io/portfolio" target="_blank" rel="noopener noreferrer" class="neon-link-portfolio inline-flex items-center px-3 py-1 rounded-lg font-semibold mx-1 text-sm tracking-wide">
+                                    <span>Portfolio</span>
+                                    <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                    </svg>
+                                </a>
+                                to track
+                            </p>
+                            <span class="text-xs text-slate-500 mt-1 block">URL: https://maravinth10.github.io/portfolio</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="copyToClipboard('https://maravinth10.github.io/portfolio')" class="self-end sm:self-center shrink-0 p-2 text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-700/80 rounded-lg border border-slate-700/50 transition-colors flex items-center text-xs gap-1.5" title="Copy Link">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>Copy</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loan Tracker Card -->
+            <div class="glass-card rounded-2xl p-5 sm:p-6 transition-all duration-300 relative group">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 mt-0.5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-slate-200 text-base sm:text-lg font-medium leading-relaxed">
+                                Check out our Loan 
+                                <a href="https://maravinth10.github.io/loan" target="_blank" rel="noopener noreferrer" class="neon-link-loan inline-flex items-center px-3 py-1 rounded-lg font-semibold mx-1 text-sm tracking-wide">
+                                    <span>Loan</span>
+                                    <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                    </svg>
+                                </a>
+                                track
+                            </p>
+                            <span class="text-xs text-slate-500 mt-1 block">URL: https://maravinth10.github.io/loan</span>
+                        </div>
+                    </div>
+
+                    <button onclick="copyToClipboard('https://maravinth10.github.io/loan')" class="self-end sm:self-center shrink-0 p-2 text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-700/80 rounded-lg border border-slate-700/50 transition-colors flex items-center text-xs gap-1.5" title="Copy Link">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>Copy</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-xs text-slate-500">
+            Powered by modern web standards • Safe external links
         </div>
     </div>
 
+    <!-- Toast Popup Notification -->
+    <div id="toast" class="toast fixed bottom-6 bg-slate-800 text-white border border-slate-700 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 text-sm">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="toast-message">Link copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Copy to clipboard helper adhering to constraints
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast("URL copied to clipboard!");
+            } catch (err) {
+                showToast("Failed to copy link.");
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        // Show toast animation
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
 </body>
 </html>
