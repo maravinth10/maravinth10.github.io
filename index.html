@@ -1,6 +1,96 @@
 
-<p>check out our Portfolio <a href="https://maravinth10.github.io/portfolio">Portfolio</a> to track</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Links & Trackers</title>
+    <style>
+        /* Modern reset and styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<p>check out our Loan <a href="https://maravinth10.github.io/loan">Loan</a> track</p>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
 
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
 
+        h1 {
+            margin-bottom: 24px;
+            color: #1a202c;
+            font-size: 24px;
+        }
+
+        .link-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+
+        p {
+            font-size: 16px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* Enhanced Clickable Links */
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        a:hover {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Quick Trackers</h1>
+        
+        <div class="link-card">
+            <p>Check out our Portfolio <a href="https://maravinth10.github.io/portfolio" target="_blank" rel="noopener noreferrer">Portfolio</a> to track</p>
+        </div>
+
+        <div class="link-card">
+            <p>Check out our Loan <a href="https://maravinth10.github.io/loan" target="_blank" rel="noopener noreferrer">Loan</a> track</p>
+        </div>
+    </div>
+
+</body>
+</html>
